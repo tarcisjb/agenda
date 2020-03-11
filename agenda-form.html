@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Criar Nova Agenda</title>
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/agenda-form.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    </head>
+    <body>
+		<header>
+			<div class="container">
+				<h1 class="titulo">Nova Agenda</h1>
+			</div>
+        </header>
+        <main>
+            <form>
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" class="input-padrao" required>
+
+                <label for="descricao">Descrição</label>
+                <textarea cols="70" rows="10" id="descricao" class="input-padrao" required></textarea>
+<!--
+                <input type="submit" value="Enviar formulário" class="enviar">
+-->
+                <span id="erro-ajax" class="invisivel">Erro ao cadastrar nova agenda</span>
+                <button id="botao-gravar" type="submit" class="botao bto-principal">Gravar</button>
+                <button id="botao-cancelar" type="reset" class="botao bto-principal">Cancelar</button>
+                <button class="botao bto-principal">Limpar</button>
+
+            </form>
+        </main>
+        <script src="js/agenda-form.js"></script>
+    </body>
+</html>

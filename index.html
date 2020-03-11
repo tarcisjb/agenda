@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Lista de Agendas</title>
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/index.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    </head>
+    <body>
+		<header>
+			<div class="container">
+				<h1 class="titulo">Lista de Agendas</h1>
+			</div>
+        </header>
+        <main>
+            <table id="tabela-agenda">
+                <col id="coluna-nome">
+                <col id="coluna-descricao">
+                <thead>
+                    <tr>
+                        <th class="th-agenda">Nome</th>
+                        <th class="th-agenda">Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+<!--
+                    <tr class="tr-agenda">
+                        <td class="td-nome-agenda">
+                            <a href="agenda-dia_v2.html?id=1">Agenda da Pessoa 1</a>
+                        </td>
+                        <td class="td-descricao-agenda">Agenda com os compromissos da pessoa 1</td>
+                        <td class="td-id-agenda invisivel">1</td>
+                        <td class="td-alterar-agenda">
+                            <button class="btn-alterar">editar</button>
+                        </td>
+                        <td class="td-excluir-agenda">
+                            <button class="btn-excluir">excluir</button>
+                        </td>
+                    </tr>
+                    <tr class="tr-agenda">
+                        <td class="td-nome-agenda">
+                            <a href="agenda-dia_v2.html?id=2">Agenda da Pessoa 2</a>
+                        </td>
+                        <td class="td-descricao-agenda">Agenda com os compromissos da pessoa 2</td>
+                        <td class="td-id-agenda invisivel">2</td>
+                        <td class="td-alterar-agenda">
+                            <button class="btn-alterar">editar</button>
+                        </td>
+                        <td class="td-excluir-agenda">
+                            <button class="btn-excluir">excluir</button>
+                        </td>
+                    </tr>
+                    <tr class="tr-agenda">
+                        <td class="td-nome-agenda">
+                            <a href="agenda-dia_v2.html?id=3">Agenda da Pessoa 3</a>
+                        </td>
+                        <td class="td-descricao-agenda">Agenda com os compromissos da pessoa 3</td>
+                        <td class="td-id-agenda invisivel">3</td>
+                        <td class="td-alterar-agenda">
+                            <button class="btn-alterar">editar</button>
+                        </td>
+                        <td class="td-excluir-agenda">
+                            <button class="btn-excluir">excluir</button>
+                        </td>
+                    </tr>
+-->                    
+                <tbody>
+            </table>
+            <span id="erro-ajax" class="invisivel">Erro ao buscar as agendas</span>
+            <button id="nova-agenda" class="botao bto-principal">Nova Agenda</button>
+        </main>
+        <script src="js/cria-elementos.js"></script>
+        <script src="js/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+html {
+    font-family:Roboto,Helvetica,Arial,sans-serif;
+}
+
+#tabela-agenda {
+    width: 100%;
+}
+
+#coluna-nome {
+    width: 20em;
+}
+
+/*
+#coluna-descricao {
+    width: 70%;
+}
+*/
+
+h1 {
+	font-size: 2em;
+/*	display:inline-block;*/
+	vertical-align:	middle;
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+td, th {
+	padding: .5em;
+	margin: 0;
+	border: 1px solid #ccc;
+/*	text-align: center;*/
+}
+
+th{
+	font-weight: bold;
+    background-color: #EEE;
+    text-align: left;
+}
+
+button{
+	padding: .5em 2em;
+	border: 0;
+	border-bottom: 3px solid;
+	font-size: 1.2em;
+	cursor: pointer;
+	margin: 0;
+	margin-top: -3px;
+	color: #fff;
+	background-color:#0c8cd3;
+	border-color: #04324c;
+/*	width: 20%;
+    display: block; */
+    clear: both;
+    margin: 10px 0px;
+}
+
+button:active{
+	margin-top:0px;
+	border: 0;
+}
+
+button[disabled=disabled], button:disabled {
+    background-color: gray;
+	border-color: darkgray;
+}
+
+.invisivel {
+	display: none;
+}

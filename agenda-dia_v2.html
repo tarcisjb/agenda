@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Agenda - Dia - V2</title>
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/agenda-dia_v2.css">
+		<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+			<div class="container">
+				<fieldset>
+					<label id="nome-agenda">Nome da agenda</label>
+<!--
+					<select id="seleciona-agenda">
+    					<option class="nome-agenda">Agenda da Simone</option>
+						<option class="nome-agenda">Agenda do Consultório</option>
+                        <option class="nome-agenda">Agenda do Marajá</option>
+					</select>
+-->                        
+                </fieldset>
+
+                <button id="hoje">Hoje</button>
+                <button id="anterior">&#60;</button>
+                <button id="proximo">&#62;</button>
+                <input id="data-corrente" type="date">
+            </div>
+            <span id="erro-ajax" class="invisivel">Erro ao buscar as agendas</span>
+        </header>
+        <main>
+            <table class="tabela-diaria">
+                <col id="coluna-hora">
+                <col id="coluna-compromisso">
+            </table>
+        </main>
+        <footer>
+
+        </footer>
+
+        <script src="js/cria-elementos.js"></script>
+        <script src="js/agenda-dia_v2.js"></script>
+    </body>
+</html>

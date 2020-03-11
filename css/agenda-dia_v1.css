@@ -1,0 +1,40 @@
+html {
+    font-family:Roboto,Helvetica,Arial,sans-serif;
+}
+
+.tabela-diaria {
+    margin: 0.5em 0 1.5em;
+    width: 100%;
+}
+
+thead {
+	background: #555555;
+	color: white;
+	font-weight: bold;
+}
+
+.td-diaria, .th-diaria {
+	border: 1px solid #000000;
+    padding: 0.5em 0.5em;
+    vertical-align: center;
+}
+
+.td-diaria-hora {
+    vertical-align: center;
+}
+
+.tabela-compromisso {
+    width: 100%;
+}
+
+.tr-compromisso {
+}
+
+.td-compromisso {
+    display: block;
+    background: red;
+    opacity: 0.7;
+    color: whitesmoke;
+    border: 1px solid white;
+    border-radius: 3px;
+}
