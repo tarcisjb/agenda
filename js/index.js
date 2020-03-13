@@ -67,6 +67,12 @@ function adicionaAgendaNaTabela(agenda) {
     tdId.classList.add("invisivel");
     var tdAlterar = criaTd("", "td-alterar-agenda");
     var btnAlterar = criaButton("Alterar", "btn-alterar");
+    btnAlterar.addEventListener("click", function(event) {
+        var nomeAgenda = event.target.parentNode.parentNode.querySelector(".td-nome-agenda").textContent;
+        var descricaoAgenda = event.target.parentNode.parentNode.querySelector(".td-descricao-agenda").textContent;
+        var idAgenda = event.target.parentNode.parentNode.querySelector(".td-id-agenda").textContent;
+        window.location.href = "agenda-form.html?id=" + idAgenda + "&nome=" + nomeAgenda + "&descricao=" + descricaoAgenda;
+    });
     tdAlterar.appendChild(btnAlterar);
     var tdExcluir = criaTd("", "td-excluir-agenda");
     var btnExcluir = criaButton("Excluir", "btn-excluir");
