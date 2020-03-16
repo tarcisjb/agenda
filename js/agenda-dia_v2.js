@@ -10,9 +10,19 @@ Date.prototype.addDias = function(dias) {
 window.onload = inicializa;
 
 function inicializa() {
-    var nomeAgenda = recuperaParametroNomeAgenda();
+    var idAgenda = recuperaParametroIdAgenda();
+    if (idAgenda == null) {
+        window.alert("Agenda não encontrada!");
+        window.location.replace("index.html");
+    }
 //    setNomeAgenda(nomeAgenda.replace(/%20/g," "));
-    setNomeAgenda(decodeURI(nomeAgenda));
+    buscaAgenda(idAgenda);
+//    if (agenda == null) {
+//        window.alert("Agenda não encontrada!");
+//        window.location.replace("index.html");
+//    }
+//    console.log(agenda);
+//    setNomeAgenda(agenda.nome);
     criaAgendaDiaria();
     var datePicker = document.querySelector("#data-corrente");
     datePicker.valueAsDate = getDataAgenda();
@@ -30,7 +40,7 @@ function inicializa() {
     }); 
 }
 
-function recuperaParametroNomeAgenda() {
+function recuperaParametroIdAgenda() {
     var parametros=location.search.split("?");
     if (parametros != "") {
         var valorParametro = parametros[1].split("=");
@@ -38,11 +48,11 @@ function recuperaParametroNomeAgenda() {
             return valorParametro[1];
         }
         else {
-            return "Nome da Agenda";
+            return null;
         }
     }
     else {
-        return "Nome da Agenda";
+        return null;
     }
 }
 
