@@ -7,6 +7,7 @@ class AgendaDto {
     }
 }
 
+/*
 function buscaAgendas() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", urlAgenda);
@@ -29,6 +30,7 @@ function buscaAgendas() {
     });
     xhr.send();
 }
+*/
 
 function buscaAgenda(idAgenda) {
     var xhr = new XMLHttpRequest();

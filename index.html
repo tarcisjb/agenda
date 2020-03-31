@@ -15,6 +15,11 @@
 			</div>
         </header>
         <main>
+            <div id="mensagemView"></div>
+
+            <div id="agendasView"></div>
+
+<!--
             <table id="tabela-agenda">
                 <col id="coluna-nome">
                 <col id="coluna-descricao">
@@ -25,7 +30,6 @@
                     </tr>
                 </thead>
                 <tbody>
-<!--
                     <tr class="tr-agenda">
                         <td class="td-nome-agenda">
                             <a href="agenda-dia_v2.html?id=1">Agenda da Pessoa 1</a>
@@ -65,14 +69,24 @@
                             <button class="btn-excluir">excluir</button>
                         </td>
                     </tr>
--->                    
                 <tbody>
             </table>
+-->                    
             <span id="erro-ajax" class="invisivel">Erro ao buscar as agendas</span>
-            <button id="nova-agenda" class="botao bto-principal">Nova Agenda</button>
+            <button id="nova-agenda" class="botao bto-principal" onclick="agendaController.incluiAgenda()">Nova Agenda</button>
         </main>
         <script src="js/cria-elementos.js"></script>
         <script src="js/data-module.js"></script>
         <script src="js/index.js"></script>
+        <script src="controller/AgendaController.js"></script>
+        <script src="model/Agenda.js"></script>
+        <script src="model/ListaAgendas.js"></script>
+        <script src="model/Mensagem.js"></script>
+        <script src="view/View.js"></script>
+        <script src="view/MensagemView.js"></script>
+        <script src="view/AgendasView.js"></script>
+        <script>
+            let agendaController = new AgendaController();
+        </script>
     </body>
 </html>

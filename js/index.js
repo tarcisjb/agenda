@@ -3,11 +3,13 @@ var nomeHtmlAgenda = "agenda-dia_v2.html";
 window.onload = inicializa;
 
 function inicializa() {
+/*    
     var botaoNovaAgenda = document.querySelector("#nova-agenda");
     botaoNovaAgenda.addEventListener("click", () => {
         window.location.href = "agenda-form.html";
     }); 
     buscaAgendas();
+*/    
 }
 
 function adicionaAgendaNaTabela(agenda) {
