@@ -12,4 +12,8 @@ class ListaAgendas {
         return [].concat(this._agendas);
     }
 
+    remove(idAgenda) {
+        this._agendas = this._agendas.filter(a => a.id != idAgenda);
+    }
+
 }

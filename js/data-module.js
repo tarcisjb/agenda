@@ -106,7 +106,8 @@ function alteraAgenda(id, agendaDto) {
     xhr.send(JSON.stringify(agendaDto));
 }
 
-function excluiAgenda(id) {
+/*
+function removeAgenda(id) {
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE","http://localhost:8080/psicologia/agendas/" + id);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -128,3 +129,4 @@ function excluiAgenda(id) {
     });
     xhr.send();
 }
+*/

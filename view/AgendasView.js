@@ -25,10 +25,10 @@ class AgendasView extends View {
                             <td class="td-descricao-agenda">${a.descricao}</td>
                             <td class="td-id-agenda invisivel">${a.id}</td>
                             <td class="td-alterar-agenda">
-                                <button class="btn-alterar">editar</button>
+                                <button class="btn-alterar" onclick="agendaController.alteraAgenda(${a.id})">Alterar</button>
                             </td>
                             <td class="td-excluir-agenda">
-                                <button class="btn-excluir">excluir</button>
+                                <button class="btn-excluir" onclick="agendaController.excluiAgenda(${a.id},'${a.nome}')">Excluir</button>
                             </td>
                         </tr>
                     `).join('')}

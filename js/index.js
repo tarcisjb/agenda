@@ -37,7 +37,7 @@ function adicionaAgendaNaTabela(agenda) {
         var idAgenda = event.target.parentNode.parentNode.querySelector(".td-id-agenda").textContent;
         if (confirm("Confirma a exclusão da agenda " + nomeAgenda + "?")) {
             setTimeout(function() {
-                excluiAgenda(idAgenda);
+                removeAgenda(idAgenda);
                 event.target.parentNode.parentNode.remove();
             }, 500);
         }
