@@ -10,10 +10,15 @@ class AgendasView extends View {
             <table id="tabela-agenda">
                 <col id="coluna-nome">
                 <col id="coluna-descricao">
+                <col id="coluna-alterar">
+                <col id="coluna-excluir">
+
                 <thead>
                     <tr>
                         <th class="th-agenda">Nome</th>
                         <th class="th-agenda">Descrição</th>
+                        <th class="th-agenda"></th>
+                        <th class="th-agenda"></th>
                     </tr>
                 </thead>
                 <tbody>
