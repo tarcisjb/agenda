@@ -1,12 +1,5 @@
 const urlAgenda = "http://localhost:8080/psicologia/agendas";
 
-class AgendaDto {
-    constructor(nome, descricao) {
-        this.nome = nome;
-        this.descricao = descricao;
-    }
-}
-
 /*
 function buscaAgendas() {
     var xhr = new XMLHttpRequest();

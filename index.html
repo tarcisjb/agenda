@@ -17,7 +17,7 @@
         <main>
             <div id="mensagemView"></div>
 
-            <form>
+            <form onsubmit="agendaController.gravar(event)">
                 <div class="form-group">
                     <input type="hidden" id="id" value="">
                 </div>
@@ -37,7 +37,6 @@
                 <div>
                     <button id="botao-gravar" type="submit" class="botao bto-principal">Gravar</button>
                     <button id="botao-cancelar" type="reset" class="botao bto-principal">Cancelar</button>
-                    <button class="botao bto-principal">Limpar</button>
                 </div>
 
             </form>
@@ -115,6 +114,7 @@
         <script src="view/View.js"></script>
         <script src="view/MensagemView.js"></script>
         <script src="view/AgendasView.js"></script>
+        <script src="dto/AgendaDto.js"></script>
         <script>
             let agendaController = new AgendaController();
         </script>
