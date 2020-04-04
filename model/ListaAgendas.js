@@ -16,4 +16,12 @@ class ListaAgendas {
         this._agendas = this._agendas.filter(a => a.id != idAgenda);
     }
 
+    altera(agenda) {
+        this._agendas.map(a => {
+           if (a.id == agenda.id) {
+               a.nome = agenda.nome;
+               a.descricao = agenda.descricao;
+           }
+        })
+    }
 }

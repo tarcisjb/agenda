@@ -14,8 +14,16 @@ class Agenda {
         return this._nome;
     }    
 
+    set nome(nome) {
+        this._nome = nome;
+    }
+
     get descricao() {
         return this._descricao;
+    }
+    
+    set descricao(descricao) {
+        this._descricao = descricao;
     }
     
     getUrlNome(paginaHtml) {

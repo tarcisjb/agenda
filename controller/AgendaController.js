@@ -52,11 +52,10 @@ class AgendaController {
         window.location.href = "agenda-form.html";
     }
 
-    alteraAgenda(idAgenda) {
-        var nomeAgenda = event.target.parentNode.parentNode.querySelector(".td-nome-agenda").textContent;
-        var descricaoAgenda = event.target.parentNode.parentNode.querySelector(".td-descricao-agenda").textContent;
-        var idAgenda = event.target.parentNode.parentNode.querySelector(".td-id-agenda").textContent;
-        window.location.href = "agenda-form.html?id=" + idAgenda + "&nome=" + nomeAgenda + "&descricao=" + descricaoAgenda;
+    alteraAgenda(idAgenda, nomeAgenda, descricaoAgenda) {
+        this._inputId.value = idAgenda;
+        this._inputNome.value = nomeAgenda;
+        this._inputDescricao.value = descricaoAgenda;
     }
 
     excluiAgenda(idAgenda, nomeAgenda) {
@@ -148,7 +147,11 @@ class AgendaController {
             var erroAjax = document.querySelector("#erro-ajax");
             if (xhr.status == 200) {
                 erroAjax.classList.add("invisivel");
+                let dtoRetorno = JSON.parse(xhr.responseText);
+                agendaController.listaAgendas.altera(new Agenda(dtoRetorno.id, dtoRetorno.nome, dtoRetorno.descricao));
+                agendaController.agendasView.update(agendaController.listaAgendas);
                 window.alert("Agenda alterada com sucesso!");
+                agendaController._limpaFormulario();
             }
             else if (xhr.status == 409) {
                 erroAjax.classList.remove("invisivel");
