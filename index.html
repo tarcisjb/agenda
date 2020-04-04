@@ -15,6 +15,8 @@
 			</div>
         </header>
         <main>
+            <div id="agendasView"></div>
+
             <div id="mensagemView"></div>
 
             <form onsubmit="agendaController.gravar(event)">
@@ -40,8 +42,6 @@
                 </div>
 
             </form>
-
-            <div id="agendasView"></div>
 
 <!--
             <table id="tabela-agenda">
@@ -102,11 +102,8 @@
             </table>
 -->                    
             <span id="erro-ajax" class="invisivel">Erro ao buscar as agendas</span>
-            <button id="nova-agenda" class="botao bto-principal" onclick="agendaController.incluiAgenda()">Nova Agenda</button>
         </main>
         <script src="js/cria-elementos.js"></script>
-        <script src="js/data-module.js"></script>
-        <script src="js/index.js"></script>
         <script src="controller/AgendaController.js"></script>
         <script src="model/Agenda.js"></script>
         <script src="model/ListaAgendas.js"></script>
