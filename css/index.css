@@ -23,14 +23,15 @@ form label, form legend {
 	display:block;
 /*	font-size: 20px; */
 	font-size: 16px; 
-	margin: 0 0 10px;
+	margin: 0 0 4px;
+	font-weight: bold;
 }
 
 .input-padrao {
 	display: block;
 	margin: 0 0 10px; 
 /*	padding: 10px 25px; */
-	padding: 10px 0;
+	padding: 4px 0;
 	width: 100%;
     font-family:Roboto,Helvetica,Arial,sans-serif;
 }
@@ -58,8 +59,8 @@ h1 {
 /*	display:inline-block;*/
 	vertical-align:	middle;
     text-align: center;
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
 
 td, th {

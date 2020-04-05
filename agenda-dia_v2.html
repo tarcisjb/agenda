@@ -10,6 +10,8 @@
     </head>
     <body>
         <header>
+            <div id="mensagemView"></div>
+
 			<div class="container">
 				<fieldset>
 					<label id="nome-agenda">Nome da agenda</label>
@@ -22,18 +24,21 @@
 -->                        
                 </fieldset>
 
-                <button id="hoje">Hoje</button>
-                <button id="anterior">&#60;</button>
-                <button id="proximo">&#62;</button>
-                <input id="data-corrente" type="date">
+                <button id="hoje" onclick="agendaDiaController.diaCorrente()">Hoje</button>
+                <button id="anterior" onclick="agendaDiaController.diaAnterior()">&#60;</button>
+                <button id="proximo" onclick="agendaDiaController.proximoDia()">&#62;</button>
+                <input id="data-corrente" onchange="agendaDiaController.atualizaData()" type="date">
             </div>
             <span id="erro-ajax" class="invisivel">Erro ao buscar as agendas</span>
         </header>
         <main>
+            <div id="agendaDiaView"></div>
+<!--
             <table class="tabela-diaria">
                 <col id="coluna-hora">
                 <col id="coluna-compromisso">
             </table>
+-->                       
         </main>
         <footer>
 
@@ -41,6 +46,22 @@
 
         <script src="js/cria-elementos.js"></script>
         <script src="js/data-module.js"></script>
+<!--
         <script src="js/agenda-dia_v2.js"></script>
+-->                       
+        <script src="model/Mensagem.js"></script>
+        <script src="model/AgendaDia.js"></script>
+        <script src="model/Evento.js"></script>
+        <script src="model/Intervalo.js"></script>
+        <script src="controller/AgendaController.js"></script>
+        <script src="controller/AgendaDiaController.js"></script>
+        <script src="helper/DateHelper.js"></script>
+        <script src="view/View.js"></script>
+        <script src="view/MensagemView.js"></script>
+        <script src="view/AgendasView.js"></script>
+        <script src="view/AgendaDiaView.js"></script>
+        <script>
+            let agendaDiaController = new AgendaDiaController();
+        </script>
     </body>
 </html>

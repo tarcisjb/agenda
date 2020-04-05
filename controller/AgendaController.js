@@ -15,7 +15,6 @@ class AgendaController {
         this._agendasView = new AgendasView($('#agendasView'), this._paginaAgendaDia);
         this._agendasView.update(this._listaAgendas);
         this._buscar();
-        this._inputId.focus();
     }
 
     get listaAgendas() {
@@ -32,6 +31,10 @@ class AgendaController {
 
     get mensagem() {
         return this._mensagem;
+    }
+
+    get urlAgenda() {
+        return this._urlAgenda;
     }
 
     alteraAgenda(idAgenda, nomeAgenda, descricaoAgenda) {
@@ -177,27 +180,4 @@ class AgendaController {
         xhr.send();
     }
 
-    _detalhar(idAgenda) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", this._urlAgenda + idAgenda);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.addEventListener("load", (event) => {
-            let xhr = event.target;
-            let erroAjax = document.querySelector("#erro-ajax");
-            if (xhr.status == 200) {
-                erroAjax.classList.add("invisivel");
-                let dtoRetorno = JSON.parse(xhr.responseText);
-            }
-            else if (xhr.status == 409) {
-                erroAjax.classList.remove("invisivel");
-                window.alert("Já existe uma agenda com este nome!");
-            }
-            else {
-                console.log(xhr.status);
-                console.log(xhr.responseText);
-                erroAjax.classList.remove("invisivel");
-            }
-        });
-        xhr.send();
-    }    
 }

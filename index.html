@@ -15,8 +15,6 @@
 			</div>
         </header>
         <main>
-            <div id="agendasView"></div>
-
             <div id="mensagemView"></div>
 
             <form onsubmit="agendaController.gravar(event)">
@@ -42,6 +40,8 @@
                 </div>
 
             </form>
+
+            <div id="agendasView"></div>
 
 <!--
             <table id="tabela-agenda">
@@ -108,10 +108,10 @@
         <script src="model/Agenda.js"></script>
         <script src="model/ListaAgendas.js"></script>
         <script src="model/Mensagem.js"></script>
+        <script src="dto/AgendaDto.js"></script>
         <script src="view/View.js"></script>
         <script src="view/MensagemView.js"></script>
         <script src="view/AgendasView.js"></script>
-        <script src="dto/AgendaDto.js"></script>
         <script>
             let agendaController = new AgendaController();
         </script>

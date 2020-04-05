@@ -2,6 +2,10 @@ html {
     font-family:Roboto,Helvetica,Arial,sans-serif;
 }
 
+#tabela-compromisso, #tr-compromisso, #td-compromisso {
+	display: none;
+}
+
 fieldset {
     display: inline;
 }
@@ -12,7 +16,7 @@ select, label {
     font-family:Roboto,Helvetica,Arial,sans-serif;
 }
 #coluna-hora {
-    width: 5em;
+	width: 5em;
 }
 
 #coluna-compromisso {
