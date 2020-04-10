@@ -2,6 +2,19 @@ html {
     font-family:Roboto,Helvetica,Arial,sans-serif;
 }
 
+.alert {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.alert-info {
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+}
+
 #tabela-compromisso, #tr-compromisso, #td-compromisso {
 	display: none;
 }

@@ -31,12 +31,12 @@
                     <label for="descricao">Descrição</label>
                     <textarea cols="70" rows="2" id="descricao" class="input-padrao" required></textarea>
                 </div>
-
+<!--
                 <span id="erro-ajax" class="invisivel">Erro ao cadastrar nova agenda</span>
-
+-->
                 <div>
                     <button id="botao-gravar" type="submit" class="botao bto-principal">Gravar</button>
-                    <button id="botao-cancelar" type="reset" class="botao bto-principal">Cancelar</button>
+                    <button id="botao-cancelar" onclick="agendaController.cancelar(event)" class="botao bto-principal">Cancelar</button>
                 </div>
 
             </form>
@@ -101,17 +101,21 @@
                 <tbody>
             </table>
 -->                    
-            <span id="erro-ajax" class="invisivel">Erro ao buscar as agendas</span>
         </main>
         <script src="js/cria-elementos.js"></script>
         <script src="controller/AgendaController.js"></script>
+        <script src="helper/Bind.js"></script>
         <script src="model/Agenda.js"></script>
         <script src="model/ListaAgendas.js"></script>
         <script src="model/Mensagem.js"></script>
         <script src="dto/AgendaDto.js"></script>
+        <script src="dto/XhrErroDto.js"></script>
         <script src="view/View.js"></script>
         <script src="view/MensagemView.js"></script>
         <script src="view/AgendasView.js"></script>
+        <script src="service/ProxyFactory.js"></script>
+        <script src="service/HttpService.js"></script>
+        <script src="service/AgendaService.js"></script>
         <script>
             let agendaController = new AgendaController();
         </script>

@@ -28,5 +28,9 @@ class AgendaDia {
         }
         return listaIntervalos;
     }
+
+    adicionaEvento() {
+        
+    }
     
 }

@@ -14,9 +14,14 @@ class AgendaDiaController {
         this._botaoProximo = $('#proximo');
         this._inputDataCorrente = $('#data-corrente');
         this._inputDataCorrente.valueAsDate = this._data;
-        this._mensagem = new Mensagem();
-        this._mensagemView = new MensagemView($('#mensagemView'));
-        this._mensagemView.update(this._mensagem);
+        // Associa o model 'Mensagem' com a view 'MensagemView', atualizando a view
+        // sempre que o atributo 'texto' for alterado
+        this._mensagem = new Bind (
+            new Mensagem(), new MensagemView($('#mensagemView')), 'texto');
+        // Associa o model 'ListaAgendas' com a view 'AgendasView', atualizando a view
+        // sempre que os métodos 'adiciona', 'remove', 'altera' e 'ordena' forem chamados
+        this._agendaDia = new Bind (new AgendaDia(this._data), 
+            new AgendaDiaView($('#agendaDiaView')), 'adicionaEvento');
         this._agendaDia = new AgendaDia(this._data);
         this._agendaDiaView = new AgendaDiaView($('#agendaDiaView'));
         this._agendaDiaView.update(this._agendaDia);
@@ -83,29 +88,15 @@ class AgendaDiaController {
         }
     }
 
-    _detalhar(idAgenda) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", this._urlAgenda + idAgenda);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.addEventListener("load", (event) => {
-            let xhr = event.target;
-            let erroAjax = document.querySelector("#erro-ajax");
-            if (xhr.status == 200) {
-                erroAjax.classList.add("invisivel");
-                let dtoRetorno = JSON.parse(xhr.responseText);
-                agendaDiaController._labelNomeAgenda.textContent = dtoRetorno.nome;
-            }
-            else if (xhr.status == 409) {
-                erroAjax.classList.remove("invisivel");
-                window.alert("Já existe uma agenda com este nome!");
-            }
-            else {
-                console.log(xhr.status);
-                console.log(xhr.responseText);
-                erroAjax.classList.remove("invisivel");
-            }
-        });
-        xhr.send();
+    _detalhar(id) {
+        let service = new AgendaService();
+        service
+            .detalhar(id)
+            .then(agenda => {
+                this._labelNomeAgenda.textContent = agenda.nome;
+                this._mensagem.texto = '';
+            })
+            .catch(error => this._mensagem.texto = error.message);  
     }    
 
 }

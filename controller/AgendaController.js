@@ -8,13 +8,17 @@ class AgendaController {
         this._inputId = $('#id');
         this._inputNome = $('#nome');
         this._inputDescricao = $('#descricao');
-        this._mensagem = new Mensagem();
-        this._mensagemView = new MensagemView($('#mensagemView'));
-        this._mensagemView.update(this._mensagem);
-        this._listaAgendas = new ListaAgendas();
-        this._agendasView = new AgendasView($('#agendasView'), this._paginaAgendaDia);
-        this._agendasView.update(this._listaAgendas);
-        this._buscar();
+        // Associa o model 'Mensagem' com a view 'MensagemView', atualizando a view
+        // sempre que o atributo 'texto' for alterado
+        this._mensagem = new Bind (
+            new Mensagem(), new MensagemView($('#mensagemView')), 'texto');
+        // Associa o model 'ListaAgendas' com a view 'AgendasView', atualizando a view
+        // sempre que os métodos 'adiciona', 'remove', 'altera' e 'ordena' forem chamados
+        this._listaAgendas = new Bind (new ListaAgendas(), 
+            new AgendasView($('#agendasView'), this._paginaAgendaDia), 'adiciona', 'remove', 'altera', 'ordena');
+        // Atributo utilizado para a ordenação da tabela de agendas            
+        this._ordemAtual = '';
+        this._buscaAgendas();
     }
 
     get listaAgendas() {
@@ -38,16 +42,16 @@ class AgendaController {
     }
 
     alteraAgenda(idAgenda, nomeAgenda, descricaoAgenda) {
+        this.mensagem.texto = '';
         this._inputId.value = idAgenda;
         this._inputNome.value = nomeAgenda;
         this._inputDescricao.value = descricaoAgenda;
     }
 
     excluiAgenda(idAgenda, nomeAgenda) {
+        this.mensagem.texto = '';
         if (confirm("Confirma a exclusão da agenda " + nomeAgenda + "?")) {
-            setTimeout(function() {
-                agendaController._remover(idAgenda);
-            }, 500);
+            setTimeout(() => this._excluiAgenda(idAgenda, nomeAgenda), 500);
         }
     }
 
@@ -57,13 +61,18 @@ class AgendaController {
         let nome = this._inputNome.value;
         let descricao = this._inputDescricao.value;
         if (id == '') {
-            this._cadastrar(nome, descricao);
+            this._incluiAgenda(nome, descricao);
         }
         else {
-            this._alterar(id, nome, descricao);
+            this._alteraAgenda(id, nome, descricao);
         }
     }
     
+    cancelar(event) {
+        this._limpaFormulario();
+        this.mensagem.texto = '';
+    }
+
     _limpaFormulario() {
         this._inputId.value = '';
         this._inputNome.value = '';
@@ -71,113 +80,50 @@ class AgendaController {
         this._inputId.focus();
     }
 
-    _buscar() {
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", this._urlAgenda);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-//        xhr.addEventListener("load", (event) => this.getAgendas(event, this._listaAgendas, this._agendasView));
-        xhr.addEventListener("load", (event) => {
-            let xhr = event.target;
-            let erroAjax = document.querySelector("#erro-ajax");
-            if (xhr.status == 200) {
-                erroAjax.classList.add("invisivel");
-                let agendas = JSON.parse(xhr.responseText);
-                agendas.forEach(a => agendaController.listaAgendas.adiciona(new Agenda(a.id, a.nome, a.descricao)));
-                agendaController.agendasView.update(agendaController.listaAgendas);
-                agendaController.mensagem.texto = '';
-                agendaController.mensagemView.update(agendaController.mensagem);  
-            }
-            else {
-                console.log(xhr.status);
-                console.log(xhr.responseText);
-                erroAjax.classList.remove("invisivel");
-            }
-        });
-        xhr.send();
+    _buscaAgendas() {
+        let service = new AgendaService();
+        service
+            .buscar()
+            .then(agendas => {
+                agendas.forEach(agenda => this._listaAgendas.adiciona(agenda));
+                this._mensagem.texto = '';
+            })
+            .catch(error => this._mensagem.texto = error.message);  
     }
 
-    _cadastrar(nome, descricao) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", this._urlAgenda);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.addEventListener("load", function() {
-            let erroAjax = document.querySelector("#erro-ajax");
-            if (xhr.status == 201) {
-                erroAjax.classList.add("invisivel");
-                let dtoRetorno = JSON.parse(xhr.responseText);
-                agendaController.listaAgendas.adiciona(new Agenda(dtoRetorno.id, dtoRetorno.nome, dtoRetorno.descricao));
-                agendaController.agendasView.update(agendaController.listaAgendas);
-                agendaController.mensagem.texto = 'Agenda cadastrada com sucesso!';
-                agendaController.mensagemView.update(agendaController.mensagem);  
-//                window.alert("Agenda cadastrada com sucesso!");
-                agendaController._limpaFormulario();
-            }
-            else if (xhr.status == 409) {
-                erroAjax.classList.remove("invisivel");
-                window.alert("Já existe uma agenda com este nome!");
-            }
-            else {
-                console.log(xhr.status);
-                console.log(xhr.responseText);
-                erroAjax.classList.remove("invisivel");
-            }
-        });
-        xhr.send(JSON.stringify(new AgendaDto(nome, descricao)));
+    _incluiAgenda(nome, descricao) {
+        let service = new AgendaService();
+        service
+            .cadastrar(new AgendaDto(nome, descricao))
+            .then(agenda => {
+                this._listaAgendas.adiciona(agenda);
+                this._mensagem.texto = 'Agenda cadastrada com sucesso!';
+                this._limpaFormulario();
+            })
+            .catch(error => this._mensagem.texto = error.message);  
     }
     
-    _alterar(id, nome, descricao) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("PUT", this._urlAgenda + id);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.addEventListener("load", function() {
-            let erroAjax = document.querySelector("#erro-ajax");
-            if (xhr.status == 200) {
-                erroAjax.classList.add("invisivel");
-                let dtoRetorno = JSON.parse(xhr.responseText);
-                agendaController.listaAgendas.altera(new Agenda(dtoRetorno.id, dtoRetorno.nome, dtoRetorno.descricao));
-                agendaController.agendasView.update(agendaController.listaAgendas);
-                agendaController.mensagem.texto = 'Agenda alterada com sucesso!';
-                agendaController.mensagemView.update(agendaController.mensagem);  
-//                window.alert("Agenda alterada com sucesso!");
-                agendaController._limpaFormulario();
-            }
-            else if (xhr.status == 409) {
-                erroAjax.classList.remove("invisivel");
-                window.alert("Já existe uma agenda com este nome!");
-            }
-            else {
-                console.log(xhr.status);
-                console.log(xhr.responseText);
-                erroAjax.classList.remove("invisivel");
-            }
-        });
-        xhr.send(JSON.stringify(new AgendaDto(nome, descricao)));
+    _alteraAgenda(id, nome, descricao) {
+        let service = new AgendaService();
+        service
+            .alterar(new AgendaDto(nome, descricao), id)
+            .then(agenda => {
+                this._listaAgendas.altera(agenda);
+                this._mensagem.texto = 'Agenda alterada com sucesso!';
+                this._limpaFormulario();
+            })
+            .catch(error => this._mensagem.texto = error.message);  
     }
 
-    _remover(idAgenda) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("DELETE", this._urlAgenda + idAgenda);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-//        xhr.addEventListener("load", (event) => this.deleteAgenda(event, idAgenda, this._listaAgendas, this._agendasView));
-        xhr.addEventListener("load", (event) => {
-            let xhr = event.target;
-            let erroAjax = document.querySelector("#erro-ajax");
-            if (xhr.status == 200) {
-                erroAjax.classList.add("invisivel");
-                agendaController.listaAgendas.remove(idAgenda);
-                agendaController.agendasView.update(agendaController.listaAgendas);
-                agendaController.mensagem.texto = '';
-                agendaController.mensagemView.update(agendaController.mensagem);  
-            }
-            else {
-                console.log(xhr.status);
-                console.log(xhr.responseText);
-                erroAjax.classList.remove("invisivel");
-            }
-        });
-        xhr.send();
+    _excluiAgenda(id, nome) {
+        let service = new AgendaService();
+        service
+            .remover(id, nome)
+            .then(agenda => {
+                this._listaAgendas.remove(id);
+                this._mensagem.texto = 'Agenda excluída com sucesso!';
+            })
+            .catch(error => this._mensagem.texto = error.message);  
     }
 
 }
