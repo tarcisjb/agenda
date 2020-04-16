@@ -1,6 +1,4 @@
 class Evento {
-
-    static contador = 0;
     
     constructor(id, data, horaInicio, horaFim, titulo, descricao) {
         this._id = id;

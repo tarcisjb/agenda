@@ -1,7 +1,5 @@
 class DateHelper {
 
-    static diasSemana = ["DOM","SEG","TER","QUA","QUI","SEX","SAB"];
-
     constructor() {
         throw new Error('Esta classe não pode ser instanciada');
     }
@@ -23,6 +21,7 @@ class DateHelper {
     }
 
     static strDiaSemana(data) {
+        let diasSemana = ["DOM","SEG","TER","QUA","QUI","SEX","SAB"];
         return DateHelper.diasSemana[data.getDay()];
     }
 

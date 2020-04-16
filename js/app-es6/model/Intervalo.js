@@ -1,6 +1,4 @@
 class Intervalo {
-
-    static contador = 0;
     
     constructor(id, data, horaInicio, duracao) {
         this._id = id;
