@@ -1,2 +1,3 @@
-node_modules/
-js/app
+client/node_modules
+client/js/app
+server/node_modules
