@@ -17,7 +17,9 @@ export class DateHelper {
     }
 
     static adicionaDias(data, dias) {
-        return new Date(data.getTime() + (dias * 24 * 60 * 60 * 1000));
+//        return new Date(data.getTime() + (dias * 24 * 60 * 60 * 1000));
+        data.setDate(data.getDate()+dias);
+        return data;
     }
 
     static strDiaSemana(data) {

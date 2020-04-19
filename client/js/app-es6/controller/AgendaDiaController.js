@@ -15,16 +15,15 @@ class AgendaDiaController {
         this._urlAgenda = "http://localhost:8080/psicologia/agendas/";
         this._paginaAgendaDia = "agenda-dia_v2.html";
         this._data = new Date();
-//        this._data.setHours(0, 0, 0, 0);
-        console.log(this._data);
+//        console.log(this._data);
         this._labelNomeAgenda = $('#nome-agenda');
         this._labelNomeAgenda.textContent = '';
         this._botaoHoje = $('#hoje');
         this._botaoAnterior = $('#anterior');
         this._botaoProximo = $('#proximo');
         this._inputDataCorrente = $('#data-corrente');
-        this._inputDataCorrente.valueAsDate = new Date(this._data.getTime());
-        console.log(this._inputDataCorrente.valueAsDate);
+        this._inputDataCorrente.value = this._data.toISOString().substr(0, 10);
+//        console.log(this._inputDataCorrente.valueAsDate.toISOString().substr(0, 10));
         // Associa o model 'Mensagem' com a view 'MensagemView', atualizando a view
         // sempre que o atributo 'texto' for alterado
         this._mensagem = new Bind (
@@ -67,8 +66,7 @@ class AgendaDiaController {
     }
 
     atualizaData() {
-        console.log('Entrou em atualizaData');
-        this._data = new Date(this._inputDataCorrente.valueAsDate.getTime());
+        this._data = new Date(this._inputDataCorrente.value.split('-'));
         this._agendaDia.dia = this._data;
     }
 
