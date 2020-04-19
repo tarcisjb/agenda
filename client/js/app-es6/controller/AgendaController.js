@@ -138,6 +138,6 @@ class AgendaController {
 
 let agendaController = new AgendaController();
 
-export function currentInstance() {
+export function agendaControllerInstance() {
     return agendaController;
 }

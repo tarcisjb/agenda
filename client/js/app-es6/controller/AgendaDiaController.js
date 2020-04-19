@@ -5,6 +5,7 @@ import {AgendaDia} from '../model/AgendaDia.js';
 import {AgendaDiaView} from '../view/AgendaDiaView.js';
 import {DateHelper} from '../helper/DateHelper.js';
 import {AgendaService} from '../service/AgendaService.js';
+import {CabecalhoAgendaView} from '../view/CabecalhoAgendaView.js';
 
 class AgendaDiaController {
 
@@ -14,60 +15,40 @@ class AgendaDiaController {
         this._idAgenda = this._recuperaIdAgenda();
         this._urlAgenda = "http://localhost:8080/psicologia/agendas/";
         this._paginaAgendaDia = "agenda-dia_v2.html";
-        this._data = new Date();
-//        console.log(this._data);
-        this._labelNomeAgenda = $('#nome-agenda');
-        this._labelNomeAgenda.textContent = '';
-        this._botaoHoje = $('#hoje');
-        this._botaoAnterior = $('#anterior');
-        this._botaoProximo = $('#proximo');
-        this._inputDataCorrente = $('#data-corrente');
-        this._inputDataCorrente.value = this._data.toISOString().substr(0, 10);
-//        console.log(this._inputDataCorrente.valueAsDate.toISOString().substr(0, 10));
         // Associa o model 'Mensagem' com a view 'MensagemView', atualizando a view
         // sempre que o atributo 'texto' for alterado
         this._mensagem = new Bind (
             new Mensagem(), new MensagemView($('#mensagemView')), 'texto');
-        // Associa o model 'ListaAgendas' com a view 'AgendasView', atualizando a view
-        // sempre que os métodos 'adiciona', 'remove', 'altera' e 'ordena' forem chamados
-        this._agendaDia = new Bind (new AgendaDia(this._data), 
-            new AgendaDiaView($('#agendaDiaView')), 'dia');
+        let agendaDia = new AgendaDia(new Date(), '');
+            // Associa o model 'AgendaDia' com a view 'AgendasView', atualizando a view
+        // sempre que o método 'dia' for chamado
+        this._agendaDia = new Bind (agendaDia, new AgendaDiaView($('#agendaDiaView')), 'dia');
+        // Associa o model 'AgendaDia' com a view 'CabecalhoAgendaView', atualizando a view
+        // sempre que os métodos 'dia' e 'nome' forem chamados
+        this._cabecalhoAgendaDia = new Bind (agendaDia, new CabecalhoAgendaView($('#cabecalhoView')), 'dia', 'nome');
         this._detalhar(this._idAgenda);
     }
 
-    get agendasView() {
-        return this._agendasView;
-    }
-
-    get mensagemView() {
-        return this._mensagemView;
-    }
-
-    get mensagem() {
-        return this._mensagem;
+    _atualizaDataModelo(data) {
+        // A atualização da data deve ser refletida em todas as views associadas ao modelo
+        this._agendaDia.dia = data;
+        this._cabecalhoAgendaDia.dia = data;
     }
 
     proximoDia() {
-        this._data = DateHelper.adicionaDias(this._data, 1);
-        this._inputDataCorrente.valueAsDate = this._data;
-        this._agendaDia.dia = this._data;
+        this._atualizaDataModelo(DateHelper.adicionaDias(this._agendaDia.dia, 1));
     }
 
     diaAnterior() {
-        this._data = DateHelper.adicionaDias(this._data, -1);
-        this._inputDataCorrente.valueAsDate = this._data;
-        this._agendaDia.dia = this._data;
+        this._atualizaDataModelo(DateHelper.adicionaDias(this._agendaDia.dia, -1));
     }
 
     diaCorrente() {
-        this._data = new Date();
-        this._inputDataCorrente.valueAsDate = this._data;
-        this._agendaDia.dia = this._data;
+        this._atualizaDataModelo(new Date());
     }
 
-    atualizaData() {
-        this._data = new Date(this._inputDataCorrente.value.split('-'));
-        this._agendaDia.dia = this._data;
+    atualizaData(data) {
+        this._atualizaDataModelo(new Date(data));
     }
 
     _recuperaIdAgenda() {
@@ -94,7 +75,7 @@ class AgendaDiaController {
         service
             .detalhar(id)
             .then(agenda => {
-                this._labelNomeAgenda.textContent = agenda.nome;
+                this._cabecalhoAgendaDia.nome = agenda.nome;
                 this._mensagem.texto = '';
             })
             .catch(error => this._mensagem.texto = error.message);  
@@ -104,6 +85,6 @@ class AgendaDiaController {
 
 let agendaDiaController = new AgendaDiaController();
 
-export function currentInstance2() {
+export function agendaDiaControllerInstance() {
     return agendaDiaController;
 }

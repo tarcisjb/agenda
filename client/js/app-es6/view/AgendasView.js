@@ -1,5 +1,5 @@
 import {View} from './View.js';
-import {currentInstance} from '../controller/AgendaController.js';
+import {agendaControllerInstance} from '../controller/AgendaController.js';
 
 export class AgendasView extends View {
 
@@ -8,13 +8,13 @@ export class AgendasView extends View {
         this._paginaHtml = paginaHtml;
         elemento.addEventListener('click', function(event) {
             if (event.target.classList.contains('btn-alterar')) {
-                currentInstance().alteraAgenda(
+                agendaControllerInstance().alteraAgenda(
                     event.target.parentElement.parentElement.children[1].textContent,
                     event.target.parentElement.parentElement.children[2].textContent,
                     event.target.parentElement.parentElement.children[3].textContent
                 );
             } else if (event.target.classList.contains('btn-excluir')) {
-                currentInstance().excluiAgenda(
+                agendaControllerInstance().excluiAgenda(
                     event.target.parentElement.parentElement.children[1].textContent,
                     event.target.parentElement.parentElement.children[2].textContent
                 );
