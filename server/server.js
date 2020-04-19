@@ -22,6 +22,12 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(function(req, res, next) {
+    res.status(404);
+    res.send('<h1>Caminho inválido: ' + req.url + '</h1>');
+    next();
+});
+
 app.listen(3000, function () {
     console.log('Servidor escutando na porta: ' + this.address().port);
     console.log('Para encerrar a execução do servidor digite CTRL + C');
