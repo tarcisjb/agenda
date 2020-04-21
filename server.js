@@ -28,7 +28,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
     console.log('Servidor escutando na porta: ' + this.address().port);
     console.log('Para encerrar a execução do servidor digite CTRL + C');
 });
