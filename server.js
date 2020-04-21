@@ -8,7 +8,7 @@ app.get('/', function (req, res) {
 });
 */
 
-app.set('clientPath', path.join(__dirname, '../..', 'agenda/client/'));
+app.set('clientPath', path.join(__dirname, '../', 'agenda/client/'));
 console.log(app.get('clientPath'));
 app.use(express.static(app.get('clientPath')));
 

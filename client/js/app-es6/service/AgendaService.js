@@ -5,7 +5,8 @@ export class AgendaService {
 
     constructor() {
         this._http = new HttpService();
-        this._urlAgenda = "http://localhost:8080/psicologia/agendas/";
+//        this._urlAgenda = "http://localhost:8080/psicologia/agendas/";
+        this._urlAgenda = "https://api-psicologia.herokuapp.com/psicologia/agendas/";
     }
 
     buscar() {
