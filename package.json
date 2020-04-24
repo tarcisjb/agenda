@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf client/js/app && mkdir client/js/app",
-    "build-client": "babel cliente/js/app-es6 -d cliente/js/app --source-maps",
+    "build-client": "babel client/js/app-es6 -d client/js/app --source-maps",
     "build": "npm run clean && npm run build-client",
     "start": "node server.js"
   },
