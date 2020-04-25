@@ -1,5 +1,6 @@
 import {HttpService} from '../service/HttpService.js';
 import {Agenda} from '../model/Agenda.js';
+import {XhrErroDto} from '../dto/XhrErroDto.js';
 
 export class AgendaService {
 
@@ -9,9 +10,24 @@ export class AgendaService {
         this._urlAgenda = "https://api-psicologia.herokuapp.com/psicologia/agendas/";
     }
 
+    _buscarOnReadyStateChange(xhr, resolve, reject) {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                resolve(JSON.parse(xhr.responseText));
+            } else if (xhr.status == 404) {
+                console.log(xhr.responseText);
+                let erroDeApiDto = JSON.parse(xhr.responseText);
+                reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
+            } else {
+                console.log(xhr.responseText);
+                reject(new XhrErroDto(xhr.status, xhr.responseText));
+            }
+        }
+    }
+
     buscar() {
         return this._http
-            .get(this._urlAgenda)
+            .get(this._urlAgenda, this._buscarOnReadyStateChange)
             .then(agendas => {
                 return agendas.map(agendaDto => new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao));
             })
@@ -24,9 +40,24 @@ export class AgendaService {
             })
     }
 
+    _detalharOnReadyStateChange(xhr, resolve, reject) {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                resolve(JSON.parse(xhr.responseText));
+            } else if (xhr.status == 404) {
+                console.log(xhr.responseText);
+                let erroDeApiDto = JSON.parse(xhr.responseText);
+                reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
+            } else {
+                console.log(xhr.responseText);
+                reject(new XhrErroDto(xhr.status, xhr.responseText));
+            }
+        }
+    }
+
     detalhar(id) {
         return this._http
-            .get(this._urlAgenda + id)
+            .get(this._urlAgenda + id, this._detalharOnReadyStateChange)
             .then(agendaDetalharDto => {
                 return new Agenda(agendaDetalharDto.id, agendaDetalharDto.nome, agendaDetalharDto.descricao);
             })
@@ -41,9 +72,22 @@ export class AgendaService {
             })
     }
 
+    _cadastrarOnReadyStateChange(xhr, resolve, reject) {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 201) {
+                resolve(JSON.parse(xhr.responseText));
+            } else if (xhr.status == 409) {
+                let erroDeApiDto = JSON.parse(xhr.responseText);
+                reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
+            } else {
+                reject(new XhrErroDto(xhr.status, xhr.responseText));
+            }
+        }
+    }
+
     cadastrar(agendaDto) {
         return this._http
-            .post(this._urlAgenda, agendaDto)
+            .post(this._urlAgenda, agendaDto, this._cadastrarOnReadyStateChange)
             .then(agendaDto => {
                 return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
             })
@@ -56,9 +100,24 @@ export class AgendaService {
             })
     }
 
+    _alterarOnReadyStateChange(xhr, resolve, reject) {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                resolve(JSON.parse(xhr.responseText));
+            } else if ((xhr.status == 404) || (xhr.status == 409)) {
+                console.log(xhr.responseText);
+                let erroDeApiDto = JSON.parse(xhr.responseText);
+                reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
+            } else {
+                console.log(xhr.responseText);
+                reject(new XhrErroDto(xhr.status, xhr.responseText));
+            }
+        }
+    }
+
     alterar(agendaDto, id) {
         return this._http
-            .put(this._urlAgenda + id, agendaDto)
+            .put(this._urlAgenda + id, agendaDto, this._alterarOnReadyStateChange)
             .then((agendaDto) => {
                 return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
             })
@@ -73,9 +132,24 @@ export class AgendaService {
             })
     }
 
+    _removerOnReadyStateChange(xhr, resolve, reject) {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                resolve(xhr.responseText);
+            } else if (xhr.status == 404) {
+                console.log(xhr.responseText);
+                let erroDeApiDto = JSON.parse(xhr.responseText);
+                reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
+            } else {
+                console.log(xhr.responseText);
+                reject(new XhrErroDto(xhr.status, xhr.responseText));
+            }
+        }
+    }
+
     remover(id, nome) {
         return this._http
-            .delete(this._urlAgenda + id)
+            .delete(this._urlAgenda + id, this._removerOnReadyStateChange)
             .then(() => {
                 return '';
             })

@@ -12,90 +12,40 @@ export class HttpService {
         4: requisição está concluída e a resposta está pronta
     */
    
-    get(url) {
+    get(url, handler) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('GET', url);
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        resolve(JSON.parse(xhr.responseText));
-                    } else if (xhr.status == 404) {
-                        console.log(xhr.responseText);
-                        let erroDeApiDto = JSON.parse(xhr.responseText);
-                        reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
-                    } else {
-                        console.log(xhr.responseText);
-                        reject(new XhrErroDto(xhr.status, xhr.responseText));
-                    }
-                }
-            }
+            xhr.onreadystatechange = () => handler(xhr, resolve, reject);
             xhr.send();
         });
     }
 
-    post(url, dado) {
+    post(url, dado, handler) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', url);
             xhr.setRequestHeader('Content-type','application/json');
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 201) {
-                        resolve(JSON.parse(xhr.responseText));
-                    } else if (xhr.status == 409) {
-                        let erroDeApiDto = JSON.parse(xhr.responseText);
-                        reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
-                    } else {
-                        reject(new XhrErroDto(xhr.status, xhr.responseText));
-                    }
-                }
-            }
+            xhr.onreadystatechange = () => handler(xhr, resolve, reject);
             xhr.send(JSON.stringify(dado));
         });
     }
 
-    put(url, dado) {
+    put(url, dado, handler) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
             xhr.setRequestHeader('Content-type','application/json');
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        resolve(JSON.parse(xhr.responseText));
-                    } else if ((xhr.status == 404) || (xhr.status == 409)) {
-                        console.log(xhr.responseText);
-                        let erroDeApiDto = JSON.parse(xhr.responseText);
-                        reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
-                    } else {
-                        console.log(xhr.responseText);
-                        reject(new XhrErroDto(xhr.status, xhr.responseText));
-                    }
-                }
-            }
+            xhr.onreadystatechange = () => handler(xhr, resolve, reject);
             xhr.send(JSON.stringify(dado));
         });
     }
    
-    delete(url) {
+    delete(url, handler) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('DELETE', url);
-            xhr.onreadystatechange = () => {
-                if (xhr.readyState == 4) {
-                    if (xhr.status == 200) {
-                        resolve(xhr.responseText);
-                    } else if (xhr.status == 404) {
-                        console.log(xhr.responseText);
-                        let erroDeApiDto = JSON.parse(xhr.responseText);
-                        reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
-                    } else {
-                        console.log(xhr.responseText);
-                        reject(new XhrErroDto(xhr.status, xhr.responseText));
-                    }
-                }
-            }
+            xhr.onreadystatechange = () => handler(xhr, resolve, reject);
             xhr.send();
         });
     }
