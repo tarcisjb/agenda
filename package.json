@@ -5,9 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf client/js/app && mkdir client/js/app",
-    "build-client": "babel client/js/app-es6 -d client/js/app --source-maps",
-    "build": "npm run clean && npm run build-client",
+    "clean": "rm -rf js/app && mkdir js/app",
+    "build-babel": "babel js/app-es6 -d js/app --source-maps",
+    "watch": "babel js/app-es6 -d js/app --source-maps --watch",
+    "build": "npm run clean && npm run build-babel",
     "start": "node server.js"
   },
   "author": "",
