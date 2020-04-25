@@ -35,6 +35,10 @@ class AgendaDiaController {
         this._cabecalhoAgendaDia.dia = data;
     }
 
+    voltar() {
+        window.location.replace("index.html");
+    }
+    
     proximoDia() {
         this._atualizaDataModelo(DateHelper.adicionaDias(this._agendaDia.dia, 1));
     }

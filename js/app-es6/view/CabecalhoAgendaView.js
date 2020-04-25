@@ -12,6 +12,8 @@ export class CabecalhoAgendaView extends View {
                 agendaDiaControllerInstance().diaAnterior();
             } else if (event.target.id == 'proximo') {
                 agendaDiaControllerInstance().proximoDia();
+            } else if (event.target.id == 'voltar') {
+                agendaDiaControllerInstance().voltar();
             }
         });
         elemento.addEventListener('change', function(event) {
@@ -28,6 +30,7 @@ export class CabecalhoAgendaView extends View {
             <button id="anterior">&#60;</button>
             <button id="proximo">&#62;</button>
             <input id="data-corrente" type="date" value="${model.dia.toISOString().substr(0, 10)}">
+            <button id="voltar">Voltar</button>
         `;
     }
 
