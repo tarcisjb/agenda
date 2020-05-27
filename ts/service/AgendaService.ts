@@ -1,8 +1,13 @@
 import {HttpService} from './HttpService.js';
 import {Agenda} from '../model/Agenda.js';
 import {XhrErroDto} from '../dto/XhrErroDto.js';
+import {AgendaDto} from '../dto/AgendaDto.js';
+import {AgendaDetalharDto} from '../dto/AgendaDetalharDto.js';
 
 export class AgendaService {
+
+    private _http: HttpService;
+    private _urlAgenda: string;
 
     constructor() {
         this._http = new HttpService();
@@ -10,7 +15,7 @@ export class AgendaService {
         this._urlAgenda = "https://api-psicologia.herokuapp.com/psicologia/agendas/";
     }
 
-    _buscarOnReadyStateChange(xhr, resolve, reject) {
+    _buscarOnReadyStateChange(xhr: XMLHttpRequest, resolve: Function, reject: Function): void {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 resolve(JSON.parse(xhr.responseText));
@@ -25,11 +30,11 @@ export class AgendaService {
         }
     }
 
-    buscar() {
+    buscar(): Promise<Agenda[]> {
         return this._http
             .get(this._urlAgenda, this._buscarOnReadyStateChange)
-            .then(agendas => {
-                return agendas.map(agendaDto => new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao));
+            .then((agendas: AgendaDto[]) => {
+                return agendas.map((agendaDto: AgendaDto) => new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao));
             })
             .catch(xhrErroDto => {
                 if (xhrErroDto.status == 0) {
@@ -40,7 +45,7 @@ export class AgendaService {
             })
     }
 
-    _detalharOnReadyStateChange(xhr, resolve, reject) {
+    _detalharOnReadyStateChange(xhr: XMLHttpRequest, resolve: Function, reject: Function): void {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 resolve(JSON.parse(xhr.responseText));
@@ -55,10 +60,10 @@ export class AgendaService {
         }
     }
 
-    detalhar(id) {
+    detalhar(id: number): Promise<Agenda> {
         return this._http
             .get(this._urlAgenda + id, this._detalharOnReadyStateChange)
-            .then(agendaDetalharDto => {
+            .then((agendaDetalharDto: AgendaDetalharDto) => {
                 return new Agenda(agendaDetalharDto.id, agendaDetalharDto.nome, agendaDetalharDto.descricao);
             })
             .catch(xhrErroDto => {
@@ -72,7 +77,7 @@ export class AgendaService {
             })
     }
 
-    _cadastrarOnReadyStateChange(xhr, resolve, reject) {
+    _cadastrarOnReadyStateChange(xhr: XMLHttpRequest, resolve: Function, reject: Function): void {
         if (xhr.readyState == 4) {
             if (xhr.status == 201) {
                 resolve(JSON.parse(xhr.responseText));
@@ -85,10 +90,10 @@ export class AgendaService {
         }
     }
 
-    cadastrar(agendaDto) {
+    cadastrar(agendaDto: AgendaDto): Promise<Agenda> {
         return this._http
             .post(this._urlAgenda, agendaDto, this._cadastrarOnReadyStateChange)
-            .then(agendaDto => {
+            .then((agendaDto: AgendaDto) => {
                 return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
             })
             .catch(xhrErroDto => {
@@ -100,7 +105,7 @@ export class AgendaService {
             })
     }
 
-    _alterarOnReadyStateChange(xhr, resolve, reject) {
+    _alterarOnReadyStateChange(xhr: XMLHttpRequest, resolve: Function, reject: Function): void {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 resolve(JSON.parse(xhr.responseText));
@@ -115,10 +120,10 @@ export class AgendaService {
         }
     }
 
-    alterar(agendaDto, id) {
+    alterar(agendaDto: AgendaDto, id: number): Promise<Agenda> {
         return this._http
             .put(this._urlAgenda + id, agendaDto, this._alterarOnReadyStateChange)
-            .then((agendaDto) => {
+            .then((agendaDto: AgendaDto) => {
                 return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
             })
             .catch(xhrErroDto => {
@@ -132,7 +137,7 @@ export class AgendaService {
             })
     }
 
-    _removerOnReadyStateChange(xhr, resolve, reject) {
+    _removerOnReadyStateChange(xhr: XMLHttpRequest, resolve: Function, reject: Function): void {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 resolve(xhr.responseText);
@@ -147,7 +152,7 @@ export class AgendaService {
         }
     }
 
-    remover(id, nome) {
+    remover(id: number, nome: string) {
         return this._http
             .delete(this._urlAgenda + id, this._removerOnReadyStateChange)
             .then(() => {

@@ -1,7 +1,7 @@
 export class Mensagem {
 
-    constructor(texto='') {
-        this._texto = texto;
+    constructor(private _texto: string = '') {
+        // this._texto = texto;
     }
 
     get texto() {

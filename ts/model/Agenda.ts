@@ -1,32 +1,32 @@
 export class Agenda {
 
-    constructor(id, nome, descricao) {
-        this._id = id;
-        this._nome = nome;
-        this._descricao = descricao;
+    constructor(private _id: number, private _nome: string, private _descricao: string) {
+        // this._id = id;
+        // this._nome = nome;
+        // this._descricao = descricao;
     }
 
-    get id() {
+    get id(): number {
         return this._id;
     }
 
-    get nome() {
+    get nome(): string {
         return this._nome;
     }    
 
-    set nome(nome) {
+    set nome(nome: string) {
         this._nome = nome;
     }
 
-    get descricao() {
+    get descricao(): string {
         return this._descricao;
     }
     
-    set descricao(descricao) {
+    set descricao(descricao: string) {
         this._descricao = descricao;
     }
     
-    getUrlNome(paginaHtml) {
+    getUrlNome(paginaHtml: string): string {
         return `
             <a href="${paginaHtml}?id=${this._id}">${this._nome}</a>
         `;

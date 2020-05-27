@@ -6,12 +6,18 @@ import {AgendaDiaView} from '../view/AgendaDiaView.js';
 import {DateHelper} from '../helper/DateHelper.js';
 import {AgendaService} from '../service/AgendaService.js';
 import {CabecalhoAgendaView} from '../view/CabecalhoAgendaView.js';
+import {Agenda} from '../model/Agenda.js';
 
 class AgendaDiaController {
+    
+    private _idAgenda: number;
+    private _urlAgenda: string;
+    private _paginaAgendaDia: string;
+    private _mensagem: any;
+    private _agendaDia: any;
+    private _cabecalhoAgendaDia: any;
 
     constructor() {
-        let $ = document.querySelector.bind(document);
-
         this._idAgenda = this._recuperaIdAgenda();
         this._urlAgenda = "http://localhost:8080/psicologia/agendas/";
         this._paginaAgendaDia = "agenda-dia_v2.html";
@@ -29,33 +35,33 @@ class AgendaDiaController {
         this._detalhar(this._idAgenda);
     }
 
-    _atualizaDataModelo(data) {
+    _atualizaDataModelo(data: Date): void {
         // A atualização da data deve ser refletida em todas as views associadas ao modelo
         this._agendaDia.dia = data;
         this._cabecalhoAgendaDia.dia = data;
     }
 
-    voltar() {
+    voltar(): void {
         window.location.replace("index.html");
     }
     
-    proximoDia() {
+    proximoDia(): void {
         this._atualizaDataModelo(DateHelper.adicionaDias(this._agendaDia.dia, 1));
     }
 
-    diaAnterior() {
+    diaAnterior(): void {
         this._atualizaDataModelo(DateHelper.adicionaDias(this._agendaDia.dia, -1));
     }
 
-    diaCorrente() {
+    diaCorrente(): void {
         this._atualizaDataModelo(new Date());
     }
 
-    atualizaData(data) {
+    atualizaData(data: Date): void {
         this._atualizaDataModelo(new Date(data));
     }
 
-    _recuperaIdAgenda() {
+    _recuperaIdAgenda(): number {
         var query = location.search.slice(1);
         if (query == "") {
             window.alert("Agenda não encontrada!");
@@ -63,26 +69,34 @@ class AgendaDiaController {
         }
         else {
             let partes = query.split('&');
-            let mapa = {};
+            // let mapa = {};
+            // partes.forEach(function (parte) {
+            //     let chaveValor = parte.split('=');
+            //     let chave = chaveValor[0];
+            //     let valor = chaveValor[1];
+            //     mapa[chave] = valor;
+            // });  
+            // return mapa["id"];
+            let mapa = new Map();
             partes.forEach(function (parte) {
                 let chaveValor = parte.split('=');
                 let chave = chaveValor[0];
                 let valor = chaveValor[1];
-                mapa[chave] = valor;
+                mapa.set(chave, valor)
             });  
-            return mapa["id"];
+            return mapa.get("id");
         }
     }
 
-    _detalhar(id) {
+    _detalhar(id: number): void {
         let service = new AgendaService();
         service
             .detalhar(id)
-            .then(agenda => {
+            .then((agenda: Agenda) => {
                 this._cabecalhoAgendaDia.nome = agenda.nome;
                 this._mensagem.texto = '';
             })
-            .catch(error => this._mensagem.texto = error.message);  
+            .catch((error: Error) => this._mensagem.texto = error.message);  
     }    
 
 }

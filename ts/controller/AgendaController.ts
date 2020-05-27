@@ -5,13 +5,20 @@ import {AgendasView} from '../view/AgendasView.js';
 import {AgendaService} from '../service/AgendaService.js';
 import {AgendaDto} from '../dto/AgendaDto.js';
 import {Bind} from '../helper/Bind.js';
+import {Agenda} from '../model/Agenda.js';
 
 class AgendaController {
 
-    constructor(private _urlAgenda: string, private _paginaAgendaDia: string, private _inputId: JQuery, private _inputNome: JQuery,
-        private _inputDescricao: JQuery, private _mensagem: Bind, private _listaAgendas: Bind, private _ordemAtual: string) {
-//        let $ = document.querySelector.bind(document);
-
+    private _urlAgenda: string;
+    private _paginaAgendaDia: string;
+    private _inputId: JQuery;
+    private _inputNome: JQuery;
+    private _inputDescricao: JQuery;
+    private _mensagem: any;
+    private _listaAgendas: any;
+    private _ordemAtual: string;
+    
+    constructor() {
         this._urlAgenda = "http://localhost:8080/psicologia/agendas/";
         this._paginaAgendaDia = "agenda-dia_v2.html";
         this._inputId = $('#id');
@@ -30,23 +37,23 @@ class AgendaController {
         this._buscaAgendas();
     }
 
-    get listaAgendas() {
+    get listaAgendas(): any {
         return this._listaAgendas;
     }
 
-    get mensagem() {
+    get mensagem(): any {
         return this._mensagem;
     }
 
-    get urlAgenda() {
+    get urlAgenda(): string {
         return this._urlAgenda;
     }
 
     alteraAgenda(idAgenda: number, nomeAgenda: string, descricaoAgenda: string): void {
         this.mensagem.texto = '';
-        this._inputId.value = idAgenda;
-        this._inputNome.value = nomeAgenda;
-        this._inputDescricao.value = descricaoAgenda;
+        this._inputId.val(idAgenda);
+        this._inputNome.val(nomeAgenda);
+        this._inputDescricao.val(descricaoAgenda);
     }
 
     excluiAgenda(idAgenda: number, nomeAgenda: string): void {
@@ -58,10 +65,10 @@ class AgendaController {
 
     gravar(event: Event): void {
         event.preventDefault();
-        let id = this._inputId.value;
-        let nome = this._inputNome.value;
-        let descricao = this._inputDescricao.value;
-        if (id == '') {
+        let id = <number>this._inputId.val();
+        let nome = <string>this._inputNome.val();
+        let descricao = <string>this._inputDescricao.val();
+        if (id == null) {
             this._incluiAgenda(nome, descricao);
         }
         else {
@@ -75,9 +82,9 @@ class AgendaController {
     }
 
     _limpaFormulario(): void {
-        this._inputId.value = '';
-        this._inputNome.value = '';
-        this._inputDescricao.value = '';
+        this._inputId.val(null);
+        this._inputNome.val('');
+        this._inputDescricao.val('');
         this._inputId.focus();
     }
 
@@ -85,46 +92,46 @@ class AgendaController {
         let service = new AgendaService();
         service
             .buscar()
-            .then(agendas => {
+            .then((agendas: Agenda[]) => {
                 agendas.forEach(agenda => this._listaAgendas.adiciona(agenda));
                 this._mensagem.texto = '';
             })
-            .catch(error => this._mensagem.texto = error.message);  
+            .catch((error: Error) => this._mensagem.texto = error.message);  
     }
 
-    _incluiAgenda(nome, descricao): void {
+    _incluiAgenda(nome:string, descricao:string): void {
         let service = new AgendaService();
         service
             .cadastrar(new AgendaDto(nome, descricao))
-            .then(agenda => {
+            .then((agenda: Agenda) => {
                 this._listaAgendas.adiciona(agenda);
                 this._mensagem.texto = 'Agenda cadastrada com sucesso!';
                 this._limpaFormulario();
             })
-            .catch(error => this._mensagem.texto = error.message);  
+            .catch((error: Error) => this._mensagem.texto = error.message);  
     }
     
-    _alteraAgenda(id, nome, descricao): void {
+    _alteraAgenda(id:number, nome:string, descricao:string): void {
         let service = new AgendaService();
         service
             .alterar(new AgendaDto(nome, descricao), id)
-            .then(agenda => {
+            .then((agenda: Agenda) => {
                 this._listaAgendas.altera(agenda);
                 this._mensagem.texto = 'Agenda alterada com sucesso!';
                 this._limpaFormulario();
             })
-            .catch(error => this._mensagem.texto = error.message);  
+            .catch((error: Error) => this._mensagem.texto = error.message);  
     }
 
-    _excluiAgenda(id, nome): void {
+    _excluiAgenda(id:number, nome:string): void {
         let service = new AgendaService();
         service
             .remover(id, nome)
-            .then(agenda => {
+            .then((agenda: Agenda) => {
                 this._listaAgendas.remove(id);
                 this._mensagem.texto = 'Agenda excluída com sucesso!';
             })
-            .catch(error => this._mensagem.texto = error.message);  
+            .catch((error: Error) => this._mensagem.texto = error.message);  
     }
 
 }

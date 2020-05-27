@@ -1,10 +1,14 @@
+import {Agenda} from './Agenda.js';
+
 export class ListaAgendas {
+
+    private _agendas: Agenda[];
 
     constructor() {
         this._agendas = [];
     }
 
-    adiciona(agenda) {
+    adiciona(agenda: Agenda) {
         this._agendas.push(agenda);
     }
 
@@ -12,11 +16,11 @@ export class ListaAgendas {
         return [].concat(this._agendas);
     }
 
-    remove(idAgenda) {
+    remove(idAgenda: number) {
         this._agendas = this._agendas.filter(a => a.id != idAgenda);
     }
 
-    altera(agenda) {
+    altera(agenda: Agenda) {
         this._agendas.map(a => {
            if (a.id == agenda.id) {
                a.nome = agenda.nome;
