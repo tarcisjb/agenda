@@ -152,11 +152,11 @@ export class AgendaService {
         }
     }
 
-    remover(id: number, nome: string) {
+    remover(id: number, nome: string): Promise<void> {
         return this._http
             .delete(this._urlAgenda + id, this._removerOnReadyStateChange)
             .then(() => {
-                return '';
+                return;
             })
             .catch(xhrErroDto => {
                 if (xhrErroDto.status == 0) {

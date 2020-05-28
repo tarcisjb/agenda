@@ -12,7 +12,7 @@ export class HttpService {
         4: requisição está concluída e a resposta está pronta
     */
    
-    get(url, handler) {
+    get(url: string, handler: Function) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('GET', url);
@@ -21,7 +21,7 @@ export class HttpService {
         });
     }
 
-    post(url, dado, handler) {
+    post(url: string, dado: any, handler: Function) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', url);
@@ -31,7 +31,7 @@ export class HttpService {
         });
     }
 
-    put(url, dado, handler) {
+    put(url: string, dado: any, handler: Function) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
@@ -41,7 +41,7 @@ export class HttpService {
         });
     }
    
-    delete(url, handler) {
+    delete(url: string, handler: Function) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('DELETE', url);

@@ -1,9 +1,9 @@
 export class ProxyFactory {
 
-    static create(objeto, props, acao) {
+    static create(objeto: any, props: string[], acao: Function) {
         return new Proxy(objeto, {
-            get(target, prop, receiver) {
-                if(props.includes(prop) && ProxyFactory._ehFuncao(target[prop])) {
+            get(target: any, prop: string, receiver: any) {
+                if((props.indexOf(prop) == -1) && ProxyFactory._ehFuncao(target[prop])) {
                     return function() {
                         //console.log(`a propriedade "${prop}" foi interceptada`);
                         let retorno = Reflect.apply(target[prop], target, arguments);
@@ -13,9 +13,9 @@ export class ProxyFactory {
                 }
                 return Reflect.get(target, prop, receiver);       
             },
-            set(target, prop, value, receiver) {
+            set(target: any, prop: string, value: any, receiver: any) {
                 let retorno = Reflect.set(target, prop, value, receiver);
-                if(props.includes(prop)) {
+                if(props.indexOf(prop) == -1) {
                     acao(target);    
                 }
                 return retorno;
@@ -23,7 +23,7 @@ export class ProxyFactory {
         })
     }
 
-    static _ehFuncao(func) {
+    static _ehFuncao(func: any) {
         return typeof(func) == typeof(Function);
     }
     

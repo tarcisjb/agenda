@@ -1,28 +1,28 @@
 import {View} from './View.js';
 import {agendaControllerInstance} from '../controller/AgendaController.js';
+import {ListaAgendas} from '../model/ListaAgendas.js';
 
-export class AgendasView extends View {
+export class AgendasView extends View<ListaAgendas> {
 
-    constructor(elemento, paginaHtml) {
-        super(elemento);
-        this._paginaHtml = paginaHtml;
-        elemento.addEventListener('click', function(event) {
-            if (event.target.classList.contains('btn-alterar')) {
+    constructor(seletor: string, private _paginaHtml: string) {
+        super(seletor);
+        $(seletor).on("click", function(event: Event) {
+            if ((<HTMLInputElement>event.target).classList.contains('btn-alterar')) {
                 agendaControllerInstance().alteraAgenda(
-                    event.target.parentElement.parentElement.children[1].textContent,
-                    event.target.parentElement.parentElement.children[2].textContent,
-                    event.target.parentElement.parentElement.children[3].textContent
+                    parseInt((<HTMLInputElement>event.target).parentElement.parentElement.children[1].textContent),
+                    (<HTMLInputElement>event.target).parentElement.parentElement.children[2].textContent,
+                    (<HTMLInputElement>event.target).parentElement.parentElement.children[3].textContent
                 );
-            } else if (event.target.classList.contains('btn-excluir')) {
+            } else if ((<HTMLInputElement>event.target).classList.contains('btn-excluir')) {
                 agendaControllerInstance().excluiAgenda(
-                    event.target.parentElement.parentElement.children[1].textContent,
-                    event.target.parentElement.parentElement.children[2].textContent
+                    parseInt((<HTMLInputElement>event.target).parentElement.parentElement.children[1].textContent),
+                    (<HTMLInputElement>event.target).parentElement.parentElement.children[2].textContent
                 );
             }
         })
     }
 
-    template(model) {
+    template(model: ListaAgendas) {
         return `
             <table id="tabela-agenda">
                 <col id="coluna-nome">

@@ -31,7 +31,7 @@ class AgendaController {
         // Associa o model 'ListaAgendas' com a view 'AgendasView', atualizando a view
         // sempre que os métodos 'adiciona', 'remove', 'altera' e 'ordena' forem chamados
         this._listaAgendas = new Bind (new ListaAgendas(), 
-            new AgendasView($('#agendasView'), this._paginaAgendaDia), 'adiciona', 'remove', 'altera', 'ordena');
+            new AgendasView('#agendasView', this._paginaAgendaDia), 'adiciona', 'remove', 'altera', 'ordena');
         // Atributo utilizado para a ordenação da tabela de agendas            
         this._ordemAtual = '';
         this._buscaAgendas();
@@ -127,7 +127,7 @@ class AgendaController {
         let service = new AgendaService();
         service
             .remover(id, nome)
-            .then((agenda: Agenda) => {
+            .then(() => {
                 this._listaAgendas.remove(id);
                 this._mensagem.texto = 'Agenda excluída com sucesso!';
             })

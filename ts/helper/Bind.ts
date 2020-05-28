@@ -1,9 +1,10 @@
 import {ProxyFactory} from '../service/ProxyFactory.js';
+import {View} from '../view/View.js';
 
-export class Bind {
+export class Bind<T> {
 
-    constructor(model: any, view: any, ...props: any[]) {
-        let proxy = ProxyFactory.create(model, props, (model: any) => {
+    constructor(model: T, view: any, ...props: string[]) {
+        let proxy = ProxyFactory.create(model, props, (model: T) => {
             view.update(model)
         });
         view.update(model);
