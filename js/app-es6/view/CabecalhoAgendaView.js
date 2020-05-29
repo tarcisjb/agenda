@@ -1,28 +1,29 @@
-import {View} from './View.js';
-import {agendaDiaControllerInstance} from '../controller/AgendaDiaController.js';
-
+import { View } from './View.js';
+import { agendaDiaControllerInstance } from '../controller/AgendaDiaController.js';
+import { DateHelper } from '../helper/DateHelper.js';
 export class CabecalhoAgendaView extends View {
-
-    constructor(elemento) {
-        super(elemento);
-        elemento.addEventListener('click', function(event) {
+    constructor(seletor) {
+        super(seletor);
+        $(seletor).on("click", function (event) {
             if (event.target.id == 'hoje') {
                 agendaDiaControllerInstance().diaCorrente();
-            } else if (event.target.id == 'anterior') {
+            }
+            else if (event.target.id == 'anterior') {
                 agendaDiaControllerInstance().diaAnterior();
-            } else if (event.target.id == 'proximo') {
+            }
+            else if (event.target.id == 'proximo') {
                 agendaDiaControllerInstance().proximoDia();
-            } else if (event.target.id == 'voltar') {
+            }
+            else if (event.target.id == 'voltar') {
                 agendaDiaControllerInstance().voltar();
             }
         });
-        elemento.addEventListener('change', function(event) {
+        $(seletor).on("change", function (event) {
             if (event.target.id == 'data-corrente') {
-                agendaDiaControllerInstance().atualizaData(event.target.value.split('-'));
+                agendaDiaControllerInstance().atualizaData(DateHelper.textoParaData(event.target.value));
             }
         });
     }
-
     template(model) {
         return `
             <label id="nome-agenda">${model.nome}</label>
@@ -33,5 +34,4 @@ export class CabecalhoAgendaView extends View {
             <button id="voltar">Voltar</button>
         `;
     }
-
 }

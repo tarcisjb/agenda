@@ -24,14 +24,14 @@ class AgendaDiaController {
         // Associa o model 'Mensagem' com a view 'MensagemView', atualizando a view
         // sempre que o atributo 'texto' for alterado
         this._mensagem = new Bind (
-            new Mensagem(), new MensagemView($('#mensagemView')), 'texto');
+            new Mensagem(), new MensagemView('#mensagemView'), 'texto');
         let agendaDia = new AgendaDia(new Date(), '');
             // Associa o model 'AgendaDia' com a view 'AgendasView', atualizando a view
         // sempre que o método 'dia' for chamado
-        this._agendaDia = new Bind (agendaDia, new AgendaDiaView($('#agendaDiaView')), 'dia');
+        this._agendaDia = new Bind (agendaDia, new AgendaDiaView('#agendaDiaView'), 'dia');
         // Associa o model 'AgendaDia' com a view 'CabecalhoAgendaView', atualizando a view
         // sempre que os métodos 'dia' e 'nome' forem chamados
-        this._cabecalhoAgendaDia = new Bind (agendaDia, new CabecalhoAgendaView($('#cabecalhoView')), 'dia', 'nome');
+        this._cabecalhoAgendaDia = new Bind (agendaDia, new CabecalhoAgendaView('#cabecalhoView'), 'dia', 'nome');
         this._detalhar(this._idAgenda);
     }
 

@@ -1,27 +1,18 @@
-import {View} from './View.js';
-import {agendaControllerInstance} from '../controller/AgendaController.js';
-
+import { View } from './View.js';
+import { agendaControllerInstance } from '../controller/AgendaController.js';
 export class AgendasView extends View {
-
-    constructor(elemento, paginaHtml) {
-        super(elemento);
-        this._paginaHtml = paginaHtml;
-        elemento.addEventListener('click', function(event) {
+    constructor(seletor, _paginaHtml) {
+        super(seletor);
+        this._paginaHtml = _paginaHtml;
+        $(seletor).on("click", function (event) {
             if (event.target.classList.contains('btn-alterar')) {
-                agendaControllerInstance().alteraAgenda(
-                    event.target.parentElement.parentElement.children[1].textContent,
-                    event.target.parentElement.parentElement.children[2].textContent,
-                    event.target.parentElement.parentElement.children[3].textContent
-                );
-            } else if (event.target.classList.contains('btn-excluir')) {
-                agendaControllerInstance().excluiAgenda(
-                    event.target.parentElement.parentElement.children[1].textContent,
-                    event.target.parentElement.parentElement.children[2].textContent
-                );
+                agendaControllerInstance().alteraAgenda(parseInt(event.target.parentElement.parentElement.children[1].textContent), event.target.parentElement.parentElement.children[2].textContent, event.target.parentElement.parentElement.children[3].textContent);
             }
-        })
+            else if (event.target.classList.contains('btn-excluir')) {
+                agendaControllerInstance().excluiAgenda(parseInt(event.target.parentElement.parentElement.children[1].textContent), event.target.parentElement.parentElement.children[2].textContent);
+            }
+        });
     }
-
     template(model) {
         return `
             <table id="tabela-agenda">
@@ -59,5 +50,4 @@ export class AgendasView extends View {
             </table>
         `;
     }
-
 }

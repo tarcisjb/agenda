@@ -1,9 +1,10 @@
 import {View} from './View.js';
 import {DateHelper} from '../helper/DateHelper.js';
+import {AgendaDia} from '../model/AgendaDia.js';
 
-export class AgendaDiaView extends View {
+export class AgendaDiaView extends View<AgendaDia> {
 
-    template(model) {
+    template(model: AgendaDia) {
         return `
             <table class="tabela-diaria">
                 <col id="coluna-hora">

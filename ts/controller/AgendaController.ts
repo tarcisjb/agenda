@@ -27,7 +27,7 @@ class AgendaController {
         // Associa o model 'Mensagem' com a view 'MensagemView', atualizando a view
         // sempre que o atributo 'texto' for alterado
         this._mensagem = new Bind (
-            new Mensagem(), new MensagemView($('#mensagemView')), 'texto');
+            new Mensagem(), new MensagemView('#mensagemView'), 'texto');
         // Associa o model 'ListaAgendas' com a view 'AgendasView', atualizando a view
         // sempre que os métodos 'adiciona', 'remove', 'altera' e 'ordena' forem chamados
         this._listaAgendas = new Bind (new ListaAgendas(), 

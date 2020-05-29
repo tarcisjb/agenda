@@ -1,29 +1,31 @@
 import {View} from './View.js';
 import {agendaDiaControllerInstance} from '../controller/AgendaDiaController.js';
+import {AgendaDia} from '../model/AgendaDia.js';
+import {DateHelper} from '../helper/DateHelper.js';
 
-export class CabecalhoAgendaView extends View {
+export class CabecalhoAgendaView extends View<AgendaDia> {
 
-    constructor(elemento) {
-        super(elemento);
-        elemento.addEventListener('click', function(event) {
-            if (event.target.id == 'hoje') {
+    constructor(seletor: string) {
+        super(seletor);
+        $(seletor).on("click", function(event: Event) {
+            if ((<HTMLInputElement>event.target).id == 'hoje') {
                 agendaDiaControllerInstance().diaCorrente();
-            } else if (event.target.id == 'anterior') {
+            } else if ((<HTMLInputElement>event.target).id == 'anterior') {
                 agendaDiaControllerInstance().diaAnterior();
-            } else if (event.target.id == 'proximo') {
+            } else if ((<HTMLInputElement>event.target).id == 'proximo') {
                 agendaDiaControllerInstance().proximoDia();
-            } else if (event.target.id == 'voltar') {
+            } else if ((<HTMLInputElement>event.target).id == 'voltar') {
                 agendaDiaControllerInstance().voltar();
             }
         });
-        elemento.addEventListener('change', function(event) {
-            if (event.target.id == 'data-corrente') {
-                agendaDiaControllerInstance().atualizaData(event.target.value.split('-'));
+        $(seletor).on("change", function(event: Event) {
+            if ((<HTMLInputElement>event.target).id == 'data-corrente') {
+                agendaDiaControllerInstance().atualizaData(DateHelper.textoParaData((<HTMLInputElement>event.target).value));
             }
         });
     }
 
-    template(model) {
+    template(model: AgendaDia) {
         return `
             <label id="nome-agenda">${model.nome}</label>
             <button id="hoje">Hoje</button>

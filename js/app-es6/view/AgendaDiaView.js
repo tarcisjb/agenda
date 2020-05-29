@@ -1,8 +1,6 @@
-import {View} from './View.js';
-import {DateHelper} from '../helper/DateHelper.js';
-
+import { View } from './View.js';
+import { DateHelper } from '../helper/DateHelper.js';
 export class AgendaDiaView extends View {
-
     template(model) {
         return `
             <table class="tabela-diaria">
@@ -26,5 +24,4 @@ export class AgendaDiaView extends View {
             </table>
         `;
     }
-
 }

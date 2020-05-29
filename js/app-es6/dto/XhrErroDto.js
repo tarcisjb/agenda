@@ -1,16 +1,12 @@
 export class XhrErroDto {
-    
-    constructor(status, responseText) {
-        this._status = status;
-        this._responseText = responseText;
+    constructor(_status, _responseText) {
+        this._status = _status;
+        this._responseText = _responseText;
     }
-
     get status() {
         return this._status;
     }
-
     get responseText() {
         return this._responseText;
     }
-
 }
