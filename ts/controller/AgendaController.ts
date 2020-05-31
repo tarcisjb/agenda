@@ -68,7 +68,7 @@ class AgendaController {
         let id = <number>this._inputId.val();
         let nome = <string>this._inputNome.val();
         let descricao = <string>this._inputDescricao.val();
-        if (id == null) {
+        if (this._inputId.val() == '') {
             this._incluiAgenda(nome, descricao);
         }
         else {

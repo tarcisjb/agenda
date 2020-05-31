@@ -2,7 +2,7 @@ export class ProxyFactory {
     static create(objeto, props, acao) {
         return new Proxy(objeto, {
             get(target, prop, receiver) {
-                if ((props.indexOf(prop) == -1) && ProxyFactory._ehFuncao(target[prop])) {
+                if (props.toString().includes(prop) && ProxyFactory._ehFuncao(target[prop])) {
                     return function () {
                         let retorno = Reflect.apply(target[prop], target, arguments);
                         acao(target);
@@ -13,7 +13,7 @@ export class ProxyFactory {
             },
             set(target, prop, value, receiver) {
                 let retorno = Reflect.set(target, prop, value, receiver);
-                if (props.indexOf(prop) == -1) {
+                if (props.toString().includes(prop)) {
                     acao(target);
                 }
                 return retorno;

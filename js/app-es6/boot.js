@@ -1,4 +1,8 @@
 import { agendaControllerInstance } from './controller/AgendaController.js';
 let agendaController = agendaControllerInstance();
-$('.form').submit = agendaController.gravar.bind(agendaController);
-$('#botao-cancelar').click = agendaController.cancelar.bind(agendaController);
+$('.form').on("submit", function (event) {
+    agendaController.gravar(event);
+});
+$('#botao-cancelar').on("click", function (event) {
+    agendaController.cancelar(event);
+});
