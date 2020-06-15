@@ -43,7 +43,7 @@ class AgendaController {
         let id = this._inputId.val();
         let nome = this._inputNome.val();
         let descricao = this._inputDescricao.val();
-        if (this._inputId.val() == '') {
+        if (id == -1) {
             this._incluiAgenda(nome, descricao);
         }
         else {
@@ -55,7 +55,7 @@ class AgendaController {
         this.mensagem.texto = '';
     }
     _limpaFormulario() {
-        this._inputId.val(null);
+        this._inputId.val(-1);
         this._inputNome.val('');
         this._inputDescricao.val('');
         this._inputId.focus();

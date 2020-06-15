@@ -8,16 +8,18 @@ export class AgendasView extends View<ListaAgendas> {
         super(seletor);
         $(seletor).on("click", function(event: Event) {
             if ((<HTMLInputElement>event.target).classList.contains('btn-alterar')) {
-                agendaControllerInstance().alteraAgenda(
-                    parseInt((<HTMLInputElement>event.target).parentElement.parentElement.children[1].textContent),
-                    (<HTMLInputElement>event.target).parentElement.parentElement.children[2].textContent,
-                    (<HTMLInputElement>event.target).parentElement.parentElement.children[3].textContent
-                );
+                let idAgenda = (<HTMLInputElement>event.target).closest('#td-id-agenda').textContent;
+                let nomeAgenda = (<HTMLInputElement>event.target).closest('#td-nome-agenda').textContent;
+                let descricaoAgenda = (<HTMLInputElement>event.target).closest('#td-descricao-agenda').textContent;
+                if (idAgenda && nomeAgenda && descricaoAgenda) {
+                    agendaControllerInstance().alteraAgenda(parseInt(idAgenda), nomeAgenda, descricaoAgenda);
+                }
             } else if ((<HTMLInputElement>event.target).classList.contains('btn-excluir')) {
-                agendaControllerInstance().excluiAgenda(
-                    parseInt((<HTMLInputElement>event.target).parentElement.parentElement.children[1].textContent),
-                    (<HTMLInputElement>event.target).parentElement.parentElement.children[2].textContent
-                );
+                let idAgenda = (<HTMLInputElement>event.target).closest('#td-id-agenda').textContent;
+                let nomeAgenda = (<HTMLInputElement>event.target).closest('#td-nome-agenda').textContent;
+                if (idAgenda && nomeAgenda) {
+                    agendaControllerInstance().excluiAgenda(parseInt(idAgenda), nomeAgenda);
+                }
             }
         })
     }

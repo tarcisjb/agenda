@@ -6,10 +6,19 @@ export class AgendasView extends View {
         this._paginaHtml = _paginaHtml;
         $(seletor).on("click", function (event) {
             if (event.target.classList.contains('btn-alterar')) {
-                agendaControllerInstance().alteraAgenda(parseInt(event.target.parentElement.parentElement.children[1].textContent), event.target.parentElement.parentElement.children[2].textContent, event.target.parentElement.parentElement.children[3].textContent);
+                let idAgenda = event.target.closest('#td-id-agenda').textContent;
+                let nomeAgenda = event.target.closest('#td-nome-agenda').textContent;
+                let descricaoAgenda = event.target.closest('#td-descricao-agenda').textContent;
+                if (idAgenda && nomeAgenda && descricaoAgenda) {
+                    agendaControllerInstance().alteraAgenda(parseInt(idAgenda), nomeAgenda, descricaoAgenda);
+                }
             }
             else if (event.target.classList.contains('btn-excluir')) {
-                agendaControllerInstance().excluiAgenda(parseInt(event.target.parentElement.parentElement.children[1].textContent), event.target.parentElement.parentElement.children[2].textContent);
+                let idAgenda = event.target.closest('#td-id-agenda').textContent;
+                let nomeAgenda = event.target.closest('#td-nome-agenda').textContent;
+                if (idAgenda && nomeAgenda) {
+                    agendaControllerInstance().excluiAgenda(parseInt(idAgenda), nomeAgenda);
+                }
             }
         });
     }

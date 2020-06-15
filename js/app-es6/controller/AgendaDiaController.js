@@ -9,6 +9,9 @@ import { CabecalhoAgendaView } from '../view/CabecalhoAgendaView.js';
 class AgendaDiaController {
     constructor() {
         this._idAgenda = this._recuperaIdAgenda();
+        if (this._idAgenda == -1) {
+            window.location.replace("index.html");
+        }
         this._urlAgenda = "http://localhost:8080/psicologia/agendas/";
         this._paginaAgendaDia = "agenda-dia_v2.html";
         this._mensagem = new Bind(new Mensagem(), new MensagemView('#mensagemView'), 'texto');
@@ -40,7 +43,7 @@ class AgendaDiaController {
         var query = location.search.slice(1);
         if (query == "") {
             window.alert("Agenda não encontrada!");
-            window.location.replace("index.html");
+            return -1;
         }
         else {
             let partes = query.split('&');

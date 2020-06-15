@@ -13,7 +13,7 @@ export class ListaAgendas {
     }
 
     get agendas() {
-        return [].concat(this._agendas);
+        return ([] as Agenda[]).concat(this._agendas);
     }
 
     remove(idAgenda: number) {

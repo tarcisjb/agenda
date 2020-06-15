@@ -11,6 +11,7 @@
     "build": "npm run clean && npm run build-babel",
     "compile-ts": "tsc",
     "start-ts": "tsc -w",
+    "start-all": "concurrently \"npm run start-ts\" \"npm run start\"",
     "start": "node server.js"
   },
   "author": "",
@@ -28,5 +29,8 @@
   },
   "engines": {
     "node": "12.16.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0"
   }
 }
