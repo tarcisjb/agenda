@@ -11,7 +11,7 @@
     "build": "npm run clean && npm run build-babel",
     "compile-ts": "tsc",
     "start-ts": "tsc -w",
-    "start-all": "concurrently \"npm run start-ts\" \"npm run start\"",
+    "start-all": "concurrently \"npm run watch\" \"npm run start-ts\" \"npm run start\"",
     "start": "node server.js"
   },
   "author": "",
