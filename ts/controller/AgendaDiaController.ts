@@ -19,10 +19,6 @@ class AgendaDiaController {
 
     constructor() {
         this._idAgenda = this._recuperaIdAgenda();
-        if (this._idAgenda == -1) {
-            // Não conseguiu recuperar o id da agenda
-            window.location.replace("index.html");
-        }
         this._urlAgenda = "http://localhost:8080/psicologia/agendas/";
         this._paginaAgendaDia = "agenda-dia_v2.html";
         // Associa o model 'Mensagem' com a view 'MensagemView', atualizando a view
@@ -70,7 +66,7 @@ class AgendaDiaController {
         if (query == "") {
             // O id da agenda não foi passado como parâmetro
             window.alert("Agenda não encontrada!");
-            return -1;
+            window.location.replace("index.html");
         }
         else {
             let partes = query.split('&');

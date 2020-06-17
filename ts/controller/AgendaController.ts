@@ -68,11 +68,11 @@ class AgendaController {
         let id = <number>this._inputId.val();
         let nome = <string>this._inputNome.val();
         let descricao = <string>this._inputDescricao.val();
-        if (id == -1) {
-            this._incluiAgenda(nome, descricao);
+        if (id) {
+            this._alteraAgenda(id, nome, descricao);
         }
         else {
-            this._alteraAgenda(id, nome, descricao);
+            this._incluiAgenda(nome, descricao);
         }
     }
     
@@ -82,7 +82,7 @@ class AgendaController {
     }
 
     _limpaFormulario(): void {
-        this._inputId.val(-1);
+        this._inputId.val(null);
         this._inputNome.val('');
         this._inputDescricao.val('');
         this._inputId.focus();

@@ -8,15 +8,15 @@ export class AgendasView extends View<ListaAgendas> {
         super(seletor);
         $(seletor).on("click", function(event: Event) {
             if ((<HTMLInputElement>event.target).classList.contains('btn-alterar')) {
-                let idAgenda = (<HTMLInputElement>event.target).closest('#td-id-agenda').textContent;
-                let nomeAgenda = (<HTMLInputElement>event.target).closest('#td-nome-agenda').textContent;
-                let descricaoAgenda = (<HTMLInputElement>event.target).closest('#td-descricao-agenda').textContent;
+                let idAgenda = (<HTMLInputElement>event.target).closest('.tr-agenda').children[1].textContent;
+                let nomeAgenda = (<HTMLInputElement>event.target).closest('.tr-agenda').children[2].textContent;
+                let descricaoAgenda = (<HTMLInputElement>event.target).closest('.tr-agenda').children[3].textContent
                 if (idAgenda && nomeAgenda && descricaoAgenda) {
                     agendaControllerInstance().alteraAgenda(parseInt(idAgenda), nomeAgenda, descricaoAgenda);
                 }
             } else if ((<HTMLInputElement>event.target).classList.contains('btn-excluir')) {
-                let idAgenda = (<HTMLInputElement>event.target).closest('#td-id-agenda').textContent;
-                let nomeAgenda = (<HTMLInputElement>event.target).closest('#td-nome-agenda').textContent;
+                let idAgenda = (<HTMLInputElement>event.target).closest('.tr-agenda').children[1].textContent;
+                let nomeAgenda = (<HTMLInputElement>event.target).closest('.tr-agenda').children[2].textContent;
                 if (idAgenda && nomeAgenda) {
                     agendaControllerInstance().excluiAgenda(parseInt(idAgenda), nomeAgenda);
                 }
@@ -50,7 +50,7 @@ export class AgendasView extends View<ListaAgendas> {
                             <td class="td-nome-agenda invisivel">${a.nome}</td>
                             <td class="td-descricao-agenda">${a.descricao}</td>
                             <td class="td-alterar-agenda">
-                                <button class="btn-alterar"">Alterar</button>
+                                <button class="btn-alterar">Alterar</button>
                             </td>
                             <td class="td-excluir-agenda">
                                 <button class="btn-excluir">Excluir</button>
