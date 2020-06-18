@@ -3,7 +3,7 @@ import {View} from '../view/View.js';
 
 export class Bind<T> {
 
-    constructor(model: T, view: any, ...props: string[]) {
+    constructor(model: T, view: View<T>, ...props: string[]) {
         let proxy = ProxyFactory.create(model, props, (model: T) => {
             view.update(model)
         });

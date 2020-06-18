@@ -3,9 +3,10 @@ import {MensagemView} from '../view/MensagemView.js';
 import {ListaAgendas} from '../model/ListaAgendas.js';
 import {AgendasView} from '../view/AgendasView.js';
 import {AgendaService} from '../service/AgendaService.js';
-import {AgendaDto} from '../dto/AgendaDto.js';
 import {Bind} from '../helper/Bind.js';
 import {Agenda} from '../model/Agenda.js';
+import {AgendaCadastrarDto} from '../dto/AgendaCadastrarDto.js';
+import {AgendaAlterarDto} from '../dto/AgendaAlterarDto.js';
 
 class AgendaController {
 
@@ -102,7 +103,7 @@ class AgendaController {
     _incluiAgenda(nome:string, descricao:string): void {
         let service = new AgendaService();
         service
-            .cadastrar(new AgendaDto(nome, descricao))
+            .cadastrar(new AgendaCadastrarDto(nome, descricao))
             .then((agenda: Agenda) => {
                 this._listaAgendas.adiciona(agenda);
                 this._mensagem.texto = 'Agenda cadastrada com sucesso!';
@@ -114,7 +115,7 @@ class AgendaController {
     _alteraAgenda(id:number, nome:string, descricao:string): void {
         let service = new AgendaService();
         service
-            .alterar(new AgendaDto(nome, descricao), id)
+            .alterar(new AgendaAlterarDto(nome, descricao), id)
             .then((agenda: Agenda) => {
                 this._listaAgendas.altera(agenda);
                 this._mensagem.texto = 'Agenda alterada com sucesso!';

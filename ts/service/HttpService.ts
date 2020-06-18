@@ -1,5 +1,3 @@
-import {XhrErroDto} from '../dto/XhrErroDto.js';
-
 export class HttpService {
 
     /*
@@ -12,7 +10,7 @@ export class HttpService {
         4: requisição está concluída e a resposta está pronta
     */
    
-    get(url: string, handler: Function) {
+    get(url: string, handler: XMLHttpRequestHandler) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('GET', url);
@@ -21,7 +19,7 @@ export class HttpService {
         });
     }
 
-    post(url: string, dado: any, handler: Function) {
+    post(url: string, dado: any, handler: XMLHttpRequestHandler) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('POST', url);
@@ -31,7 +29,7 @@ export class HttpService {
         });
     }
 
-    put(url: string, dado: any, handler: Function) {
+    put(url: string, dado: any, handler: XMLHttpRequestHandler) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('PUT', url);
@@ -41,7 +39,7 @@ export class HttpService {
         });
     }
    
-    delete(url: string, handler: Function) {
+    delete(url: string, handler: XMLHttpRequestHandler) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('DELETE', url);
@@ -50,4 +48,9 @@ export class HttpService {
         });
     }
 
+}
+
+export interface XMLHttpRequestHandler {
+
+    (xhr: XMLHttpRequest, resolve: Function, reject: Function): void
 }

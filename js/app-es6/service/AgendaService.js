@@ -77,17 +77,19 @@ export class AgendaService {
                 resolve(JSON.parse(xhr.responseText));
             }
             else if (xhr.status == 409) {
+                console.log(xhr.responseText);
                 let erroDeApiDto = JSON.parse(xhr.responseText);
                 reject(new XhrErroDto(xhr.status, `${erroDeApiDto.erro}: ${erroDeApiDto.mensagem}`));
             }
             else {
+                console.log(xhr.responseText);
                 reject(new XhrErroDto(xhr.status, xhr.responseText));
             }
         }
     }
-    cadastrar(agendaDto) {
+    cadastrar(agendaCadastrarDto) {
         return this._http
-            .post(this._urlAgenda, agendaDto, this._cadastrarOnReadyStateChange)
+            .post(this._urlAgenda, agendaCadastrarDto, this._cadastrarOnReadyStateChange)
             .then((agendaDto) => {
             return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
         })
@@ -116,9 +118,9 @@ export class AgendaService {
             }
         }
     }
-    alterar(agendaDto, id) {
+    alterar(agendaAlterarDto, id) {
         return this._http
-            .put(this._urlAgenda + id, agendaDto, this._alterarOnReadyStateChange)
+            .put(this._urlAgenda + id, agendaAlterarDto, this._alterarOnReadyStateChange)
             .then((agendaDto) => {
             return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
         })
@@ -127,7 +129,7 @@ export class AgendaService {
                 throw new Error('Falha ao enviar requisição para o serviço "alterar"');
             }
             else if (xhrErroDto.status == 404) {
-                throw new Error(`Falha ao alterar agenda: Agenda de nome '${agendaDto.nome}' não encontrada.`);
+                throw new Error(`Falha ao alterar agenda: Agenda de nome '${agendaAlterarDto.nome}' não encontrada.`);
             }
             else {
                 throw new Error(xhrErroDto.responseText);

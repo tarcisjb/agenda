@@ -1,6 +1,6 @@
 export class ProxyFactory {
 
-    static create(objeto: any, props: string[], acao: Function) {
+    static create(objeto: any, props: string[], acao: AtualizaView) {
         return new Proxy(objeto, {
             get(target: any, prop: string, receiver: any) {
                 if(props.toString().includes(prop) && ProxyFactory._ehFuncao(target[prop])) {
@@ -27,4 +27,9 @@ export class ProxyFactory {
         return typeof(func) == typeof(Function);
     }
     
+}
+
+export interface AtualizaView {
+
+    (model: any): void
 }
