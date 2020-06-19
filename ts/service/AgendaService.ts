@@ -32,19 +32,17 @@ export class AgendaService {
         }
     }
 
-    buscar(): Promise<Agenda[]> {
-        return this._http
-            .get(this._urlAgenda, this._buscarOnReadyStateChange)
-            .then((agendas: AgendaDto[]) => {
-                return agendas.map((agendaDto: AgendaDto) => new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao));
-            })
-            .catch(xhrErroDto => {
-                if (xhrErroDto.status == 0) {
-                    throw new Error('Falha ao enviar requisição para o serviço "buscar"');
-                } else {
-                    throw new Error('Não foi possível buscar as agendas');
-                }
-            })
+    async buscar(): Promise<Agenda[]> {
+        try {
+            let agendas = <AgendaDto[]> await this._http.get(this._urlAgenda, this._buscarOnReadyStateChange);
+            return agendas.map((agendaDto: AgendaDto) => new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao));
+        } catch (xhrErroDto) {
+            if (xhrErroDto.status == 0) {
+                throw new Error('Falha ao enviar requisição para o serviço "buscar"');
+            } else {
+                throw new Error('Não foi possível buscar as agendas');
+            }
+        }
     }
 
     _detalharOnReadyStateChange(xhr: XMLHttpRequest, resolve: Function, reject: Function): void {
@@ -62,21 +60,19 @@ export class AgendaService {
         }
     }
 
-    detalhar(id: number): Promise<Agenda> {
-        return this._http
-            .get(this._urlAgenda + id, this._detalharOnReadyStateChange)
-            .then((agendaDetalharDto: AgendaDetalharDto) => {
-                return new Agenda(agendaDetalharDto.id, agendaDetalharDto.nome, agendaDetalharDto.descricao);
-            })
-            .catch(xhrErroDto => {
-                if (xhrErroDto.status == 0) {
-                    throw new Error('Falha ao enviar requisição para o serviço "detalhar"');
-                } else if (xhrErroDto.status == 404) {
-                    throw new Error(xhrErroDto.responseText);
-                } else {
-                    throw new Error('Não foi possível buscar as agendas');
-                }
-            })
+    async detalhar(id: number): Promise<Agenda> {
+        try {
+            let agendaDetalharDto = <AgendaDetalharDto> await this._http.get(this._urlAgenda + id, this._detalharOnReadyStateChange);
+            return new Agenda(agendaDetalharDto.id, agendaDetalharDto.nome, agendaDetalharDto.descricao);
+        } catch (xhrErroDto) {
+            if (xhrErroDto.status == 0) {
+                throw new Error('Falha ao enviar requisição para o serviço "detalhar"');
+            } else if (xhrErroDto.status == 404) {
+                throw new Error(xhrErroDto.responseText);
+            } else {
+                throw new Error('Não foi possível buscar as agendas');
+            }
+        }
     }
 
     _cadastrarOnReadyStateChange(xhr: XMLHttpRequest, resolve: Function, reject: Function): void {
@@ -94,19 +90,17 @@ export class AgendaService {
         }
     }
 
-    cadastrar(agendaCadastrarDto: AgendaCadastrarDto): Promise<Agenda> {
-        return this._http
-            .post(this._urlAgenda, agendaCadastrarDto, this._cadastrarOnReadyStateChange)
-            .then((agendaDto: AgendaDto) => {
-                return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
-            })
-            .catch(xhrErroDto => {
-                if (xhrErroDto.status == 0) {
-                    throw new Error('Falha ao enviar requisição para o serviço "cadastrar"');
-                } else {
-                    throw new Error(xhrErroDto.responseText);
-                }
-            })
+    async cadastrar(agendaCadastrarDto: AgendaCadastrarDto): Promise<Agenda> {
+        try {
+            let agendaDto = <AgendaDto> await this._http.post(this._urlAgenda, agendaCadastrarDto, this._cadastrarOnReadyStateChange);
+            return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
+        } catch(xhrErroDto) {
+            if (xhrErroDto.status == 0) {
+                throw new Error('Falha ao enviar requisição para o serviço "cadastrar"');
+            } else {
+                throw new Error(xhrErroDto.responseText);
+            }
+        }
     }
 
     _alterarOnReadyStateChange(xhr: XMLHttpRequest, resolve: Function, reject: Function): void {
@@ -124,21 +118,19 @@ export class AgendaService {
         }
     }
 
-    alterar(agendaAlterarDto: AgendaAlterarDto, id: number): Promise<Agenda> {
-        return this._http
-            .put(this._urlAgenda + id, agendaAlterarDto, this._alterarOnReadyStateChange)
-            .then((agendaDto: AgendaDto) => {
-                return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
-            })
-            .catch(xhrErroDto => {
-                if (xhrErroDto.status == 0) {
-                    throw new Error('Falha ao enviar requisição para o serviço "alterar"');
-                } else if (xhrErroDto.status == 404) {
-                    throw new Error(`Falha ao alterar agenda: Agenda de nome '${agendaAlterarDto.nome}' não encontrada.`);
-                } else {
-                    throw new Error(xhrErroDto.responseText);
-                }
-            })
+    async alterar(agendaAlterarDto: AgendaAlterarDto, id: number): Promise<Agenda> {
+        try {
+            let agendaDto = <AgendaDto> await this._http.put(this._urlAgenda + id, agendaAlterarDto, this._alterarOnReadyStateChange);
+            return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
+        } catch (xhrErroDto) {
+            if (xhrErroDto.status == 0) {
+                throw new Error('Falha ao enviar requisição para o serviço "alterar"');
+            } else if (xhrErroDto.status == 404) {
+                throw new Error(`Falha ao alterar agenda: Agenda de nome '${agendaAlterarDto.nome}' não encontrada.`);
+            } else {
+                throw new Error(xhrErroDto.responseText);
+            }
+        }
     }
 
     _removerOnReadyStateChange(xhr: XMLHttpRequest, resolve: Function, reject: Function): void {
@@ -156,21 +148,18 @@ export class AgendaService {
         }
     }
 
-    remover(id: number, nome: string): Promise<void> {
-        return this._http
-            .delete(this._urlAgenda + id, this._removerOnReadyStateChange)
-            .then(() => {
-                return;
-            })
-            .catch(xhrErroDto => {
-                if (xhrErroDto.status == 0) {
-                    throw new Error('Falha ao enviar requisição para o serviço "alterar"');
-                } else if (xhrErroDto.status == 404) {
-                    throw new Error(`Falha ao excluir agenda: Agenda de nome '${nome}' não encontrada.`);
-                } else {
-                    throw new Error(xhrErroDto.responseText);
-                }
-            })
+    async remover(id: number, nome: string): Promise<void> {
+        try {
+            await this._http.delete(this._urlAgenda + id, this._removerOnReadyStateChange);
+        } catch (xhrErroDto) {
+            if (xhrErroDto.status == 0) {
+                throw new Error('Falha ao enviar requisição para o serviço "alterar"');
+            } else if (xhrErroDto.status == 404) {
+                throw new Error(`Falha ao excluir agenda: Agenda de nome '${nome}' não encontrada.`);
+            } else {
+                throw new Error(xhrErroDto.responseText);
+            }
+        }
     }
 
 }

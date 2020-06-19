@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { HttpService } from './HttpService.js';
 import { Agenda } from '../model/Agenda.js';
 import { XhrErroDto } from '../dto/XhrErroDto.js';
@@ -23,17 +32,18 @@ export class AgendaService {
         }
     }
     buscar() {
-        return this._http
-            .get(this._urlAgenda, this._buscarOnReadyStateChange)
-            .then((agendas) => {
-            return agendas.map((agendaDto) => new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao));
-        })
-            .catch(xhrErroDto => {
-            if (xhrErroDto.status == 0) {
-                throw new Error('Falha ao enviar requisição para o serviço "buscar"');
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let agendas = yield this._http.get(this._urlAgenda, this._buscarOnReadyStateChange);
+                return agendas.map((agendaDto) => new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao));
             }
-            else {
-                throw new Error('Não foi possível buscar as agendas');
+            catch (xhrErroDto) {
+                if (xhrErroDto.status == 0) {
+                    throw new Error('Falha ao enviar requisição para o serviço "buscar"');
+                }
+                else {
+                    throw new Error('Não foi possível buscar as agendas');
+                }
             }
         });
     }
@@ -54,20 +64,21 @@ export class AgendaService {
         }
     }
     detalhar(id) {
-        return this._http
-            .get(this._urlAgenda + id, this._detalharOnReadyStateChange)
-            .then((agendaDetalharDto) => {
-            return new Agenda(agendaDetalharDto.id, agendaDetalharDto.nome, agendaDetalharDto.descricao);
-        })
-            .catch(xhrErroDto => {
-            if (xhrErroDto.status == 0) {
-                throw new Error('Falha ao enviar requisição para o serviço "detalhar"');
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let agendaDetalharDto = yield this._http.get(this._urlAgenda + id, this._detalharOnReadyStateChange);
+                return new Agenda(agendaDetalharDto.id, agendaDetalharDto.nome, agendaDetalharDto.descricao);
             }
-            else if (xhrErroDto.status == 404) {
-                throw new Error(xhrErroDto.responseText);
-            }
-            else {
-                throw new Error('Não foi possível buscar as agendas');
+            catch (xhrErroDto) {
+                if (xhrErroDto.status == 0) {
+                    throw new Error('Falha ao enviar requisição para o serviço "detalhar"');
+                }
+                else if (xhrErroDto.status == 404) {
+                    throw new Error(xhrErroDto.responseText);
+                }
+                else {
+                    throw new Error('Não foi possível buscar as agendas');
+                }
             }
         });
     }
@@ -88,17 +99,18 @@ export class AgendaService {
         }
     }
     cadastrar(agendaCadastrarDto) {
-        return this._http
-            .post(this._urlAgenda, agendaCadastrarDto, this._cadastrarOnReadyStateChange)
-            .then((agendaDto) => {
-            return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
-        })
-            .catch(xhrErroDto => {
-            if (xhrErroDto.status == 0) {
-                throw new Error('Falha ao enviar requisição para o serviço "cadastrar"');
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let agendaDto = yield this._http.post(this._urlAgenda, agendaCadastrarDto, this._cadastrarOnReadyStateChange);
+                return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
             }
-            else {
-                throw new Error(xhrErroDto.responseText);
+            catch (xhrErroDto) {
+                if (xhrErroDto.status == 0) {
+                    throw new Error('Falha ao enviar requisição para o serviço "cadastrar"');
+                }
+                else {
+                    throw new Error(xhrErroDto.responseText);
+                }
             }
         });
     }
@@ -119,20 +131,21 @@ export class AgendaService {
         }
     }
     alterar(agendaAlterarDto, id) {
-        return this._http
-            .put(this._urlAgenda + id, agendaAlterarDto, this._alterarOnReadyStateChange)
-            .then((agendaDto) => {
-            return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
-        })
-            .catch(xhrErroDto => {
-            if (xhrErroDto.status == 0) {
-                throw new Error('Falha ao enviar requisição para o serviço "alterar"');
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let agendaDto = yield this._http.put(this._urlAgenda + id, agendaAlterarDto, this._alterarOnReadyStateChange);
+                return new Agenda(agendaDto.id, agendaDto.nome, agendaDto.descricao);
             }
-            else if (xhrErroDto.status == 404) {
-                throw new Error(`Falha ao alterar agenda: Agenda de nome '${agendaAlterarDto.nome}' não encontrada.`);
-            }
-            else {
-                throw new Error(xhrErroDto.responseText);
+            catch (xhrErroDto) {
+                if (xhrErroDto.status == 0) {
+                    throw new Error('Falha ao enviar requisição para o serviço "alterar"');
+                }
+                else if (xhrErroDto.status == 404) {
+                    throw new Error(`Falha ao alterar agenda: Agenda de nome '${agendaAlterarDto.nome}' não encontrada.`);
+                }
+                else {
+                    throw new Error(xhrErroDto.responseText);
+                }
             }
         });
     }
@@ -153,20 +166,20 @@ export class AgendaService {
         }
     }
     remover(id, nome) {
-        return this._http
-            .delete(this._urlAgenda + id, this._removerOnReadyStateChange)
-            .then(() => {
-            return;
-        })
-            .catch(xhrErroDto => {
-            if (xhrErroDto.status == 0) {
-                throw new Error('Falha ao enviar requisição para o serviço "alterar"');
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this._http.delete(this._urlAgenda + id, this._removerOnReadyStateChange);
             }
-            else if (xhrErroDto.status == 404) {
-                throw new Error(`Falha ao excluir agenda: Agenda de nome '${nome}' não encontrada.`);
-            }
-            else {
-                throw new Error(xhrErroDto.responseText);
+            catch (xhrErroDto) {
+                if (xhrErroDto.status == 0) {
+                    throw new Error('Falha ao enviar requisição para o serviço "alterar"');
+                }
+                else if (xhrErroDto.status == 404) {
+                    throw new Error(`Falha ao excluir agenda: Agenda de nome '${nome}' não encontrada.`);
+                }
+                else {
+                    throw new Error(xhrErroDto.responseText);
+                }
             }
         });
     }
