@@ -19,4 +19,7 @@ export class ListaAgendas {
             }
         });
     }
+    toString() {
+        return JSON.stringify(this._agendas);
+    }
 }

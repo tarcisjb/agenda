@@ -31,4 +31,8 @@ export class Agenda {
             <a href="${paginaHtml}?id=${this._id}">${this._nome}</a>
         `;
     }
+
+    toString(): string {
+        return JSON.stringify(this);
+    }
 }
